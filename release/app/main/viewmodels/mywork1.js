@@ -2,6 +2,10 @@ define(['durandal/app','knockout','plugins/router','plugins/dialog'], function (
    
   
        return  {
+                activate:function () {
+                        
+
+                }
               
         };
 }); 

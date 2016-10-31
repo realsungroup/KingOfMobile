@@ -18,7 +18,9 @@
         "winno":0,
         "winname":"",
         "canteenno":0,
-        "canteenname":""
+        "canteenname":"",
+        "runmode":"weixin",
+        "weixinloginurl":"weixin"
     },
     "kingofdinner":
     {

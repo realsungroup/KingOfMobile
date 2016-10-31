@@ -1,29 +1,18 @@
-<div class="page-index">
-  <div class="card">
-    <div style="background-image:url(//gqianniu.alicdn.com/bao/uploaded/i4//tfscom/i3/TB10LfcHFXXXXXKXpXXXXXXXXXX_!!0-item_pic.jpg_250.3.0q60.jpg)" valign="bottom" class="card-header color-white no-border">旅途的山</div>
-    <div class="card-content">
-      <div class="card-content-inner">
-        <p class="color-gray">发表于 2015/01/15</p>
-        <p>此处是内容...</p>
+<div class="navbar-header">
+		            <button type="button" class="navbar-toggle" data-toggle="collapse"
+	            			data-target="#example-navbar-collapse">
+	            		<span class="sr-only">切换导航</span>
+	            		<span class="icon-bar"></span>
+	            		<span class="icon-bar"></span>
+	            		<span class="icon-bar"></span>
+	            	</button>
+		            <a class="navbar-brand"></a>
+	         </div>
+      <div class="collapse navbar-collapse" id="example-navbar-collapse">
+       
+            <ul class="nav navbar-nav " data-bind="foreach: myworkRouter">
+               <li class="tab-label"  data-bind="css: { active: isActive}"><a  data-bind="attr: { href: hash },text: title"></a></li>
+               <li><a></a></li>
+            </ul>
       </div>
-    </div>
-    <div class="card-footer">
-      <a href="#" class="link">赞</a>
-      <a href="#" class="link">更多</a>
-    </div>
-  </div>
-  <div class="card">
-    <div style="background-image:url(//gqianniu.alicdn.com/bao/uploaded/i4//tfscom/i3/TB10LfcHFXXXXXKXpXXXXXXXXXX_!!0-item_pic.jpg_250.3.0q60.jpg)" valign="bottom" class="card-header color-white no-border">旅途的山</div>
-    <div class="card-content">
-      <div class="card-content-inner">
-        <p class="color-gray">发表于 2015/01/15</p>
-        <p>此处是内容...</p>
-      </div>
-    </div>
-    <div class="card-footer">
-      <a href="#" class="link">赞</a>
-      <a href="#" class="link">更多</a>
-    </div>
-  </div>
-  ... 可以多放几张卡片
-</div>
+ 
