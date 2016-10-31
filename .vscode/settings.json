@@ -1,0 +1,18 @@
+// Place your settings in this file to overwrite default and user settings.
+{
+    "files.exclude": {
+        "**/.git": false,
+        "**/.DS_Store": true,
+     
+        "test/**/*.js": false,
+        "release":false,
+        "durandalRelease":true,
+        "source/entities":true,
+        "source/interfaces":true,
+        "source/*.ts":true,
+         "source/*.js":true
+        
+    }
+,
+"typescript.tsdk": "./node_modules/typescript/lib"
+}

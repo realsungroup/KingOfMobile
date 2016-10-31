@@ -1,0 +1,44 @@
+{
+  "name": "ts-vscode-boilerplate",
+  "version": "1.0.0",
+  "description": "Visual Studio Code TypeScript boilerplate",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "gulp lint && gulp build && gulp test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/remojansen/ts-vscode-boilerplate.git"
+  },
+  "author": "Remo H. Jansen <remo.jansen@wolksoftware.com> (http://www.remojansen.com)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/remojansen/ts-vscode-boilerplate/issues"
+  },
+  "homepage": "https://github.com/remojansen/ts-vscode-boilerplate#readme",
+  "devDependencies": {
+    "browser-sync": "^2.11.1",
+    "browserify": "^13.0.0",
+    "chai": "^3.5.0",
+    "gulp": "^3.9.1",
+    "gulp-durandal": "^1.1.7",
+    "gulp-istanbul": "^0.10.3",
+    "gulp-mocha": "^2.2.0",
+    "gulp-sourcemaps": "^1.6.0",
+    "gulp-tslint": "^4.3.2",
+    "gulp-typescript": "^2.11.0",
+    "gulp-uglify": "^1.5.2",
+    "run-sequence": "^1.1.5",
+    "tslint": "^3.3.0",
+    "typescript": "^1.7.5",
+    "vinyl-buffer": "^1.0.0",
+    "vinyl-source-stream": "^1.1.0",
+    "wallabify": "0.0.14"
+  },
+  "dependencies": {
+    "jquery": "^2.2.0"
+  }
+}

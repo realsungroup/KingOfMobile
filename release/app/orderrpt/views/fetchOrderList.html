@@ -1,0 +1,41 @@
+ <div data-view="plugins/messageBox" data-bind="css: getClass(), style: getStyle()" class="wid">
+        <div id="detail">
+
+            <link href="scripts/css/siteDetail.css" rel="stylesheet" type="text/css" media="print">
+            <div class="modal-header">
+                <h3 data-bind="html: settings.dates"> </h3>
+               
+            </div>
+            <div class="modal-body divb">
+               
+                <table class="message tc twid">
+                    <thead>
+                        <tr>
+                            <th class="tc fz">分类</th>
+                            <th class="tc fz">菜名</th>
+                            <th class="tc fz">数量</th>
+                        </tr>
+                    </thead>
+                    <tbody data-bind="foreach: settings.data">
+                        <tr >
+                            </td>
+                            <td data-bind="text:catelogs">
+                            </td>
+                            <td data-bind="text:names">
+                            </td>
+                            <td data-bind="text:amount">
+                            </td>    
+                        </tr>
+                    </tbody>
+               </table>
+            </div>
+        </div> 
+            <div class="modal-footer">
+                <!-- ko foreach: options -->
+                <button class="rf" data-bind="click: function () { $parent.selectOption($parent.getButtonValue($data)); }, text: $parent.getButtonText($data), css: $parent.getButtonClass($index)"></button>
+                <button class="btn btn-primary rf" data-bind="click: function () { $('#detail').jqprint(); }">打印</button>
+                <!-- /ko -->
+                <div style="clear:both;"></div>
+            </div>
+</div>
+<!--<script src="~/source//jquery-1.9.1.js"></script>-->

@@ -1,0 +1,74 @@
+<div id="claim" data-bind="if:haverows" class="lf" style="background-image: url(img/bg.jpg);">
+    <img src="img/user.jpg" class="imgw1 lf"/>
+    <!--<img data-bind="attr: { src:rows()[0].C3_514046415115 }" class="imgw1 lf"/>-->
+    <table class="lf">
+        <tr>
+            <td>
+                <span class="lf" data-bind="text:rows()[0].C3_517602192375"></span>
+                <img class="imgw rf" src="img/home.png"/>
+                <span class="rf" data-bind="text:rows()[0].C3_517602201297"></span>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <span class="lf" data-bind="text:rows()[0].C3_529485594613"></span>
+                <img class="imgw rf" src="img/date.png"/>
+                <span class="rf" data-bind="text:rows()[0].C3_512140206161"></span>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <img class="imgw rf" src="img/kcal.png"/>
+                <span class="rf" data-bind="text:rows()[0].C3_513890663124"></span>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <img class="imgw rf" src="img/uu.png"/>
+                <span class="rf">操作员</span>
+            </td>
+        </tr>
+    </table>
+</div>
+<input type="button" value="扫描" class="tBtn tBtn1 rf" data-bind="click : openScanner"/>
+<div id="menu" class="lf">
+    <table class="lf">
+        <thead>
+            <tr data-bind="foreach: columns">
+                <th data-bind="text: headerText"></th>
+            </tr>
+        </thead>
+        <tbody data-bind="foreach: subrows">
+            <tr >
+                <td width=15%>
+                    <img data-bind="attr: { src: C3_512140252349 }" width="40px" height="40px"/>
+                </td>
+                <td data-bind="text:C3_512140251614">
+                </td>
+                <td data-bind="text:C3_512140253770" width=40%>
+                </td>
+                <td data-bind="text:C3_512140252005">
+                </td>
+                <td data-bind="text:C3_512140253505">
+                </td>
+                <td data-bind="text:C3_512140253223">
+                </td>    
+            </tr>
+        </tbody>
+        <tfoot>
+            <tr data-bind="if:haverows">
+                <td colspan="5">
+                    <span class="rf">合计:</span>
+                </td>
+                <td  data-bind="text:rows()[0].C3_512140208817">
+                </td>
+             </tr>
+        </tfoot>
+    </table>
+    <div data-bind="if:haverows">
+       <input type="button" value="领取" class="tBtn tBtn2 rf" data-bind="click : finishOrder"/>
+    </div>
+</div>
+    
+
+ 
