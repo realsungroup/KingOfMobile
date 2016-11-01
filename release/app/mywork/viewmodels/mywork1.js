@@ -4,7 +4,13 @@ define(['durandal/app','knockout','plugins/router','plugins/dialog','mywork/mywo
        return  {
                 activate:function () {
                         mywork.subtitle("mywork1");
-                        console.log(mywork);
+                        var navCls=$("#example-navbar-collapse").attr("class");
+                          if (navCls=="navbar-collapse collapse in")
+                                {
+                                        $(".navbar-toggle").trigger("click");
+                                }
+                         
+                       
 
                 },
                 attached:function () {

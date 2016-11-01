@@ -3,12 +3,15 @@ define(['durandal/app','knockout','plugins/router','plugins/dialog','mywork/mywo
   
        return  {
                 activate:function () {
-                         
                           mywork.subtitle("mywork3");
-
+                          var navCls=$("#example-navbar-collapse").attr("class");
+                          if (navCls=="navbar-collapse collapse in")
+                                {
+                                        $(".navbar-toggle").trigger("click");
+                                }
                 },
                  attached:function () {
-                       // console.log(mywork);
+                       
                         mywork.subtitle("mywork3");
                        
                        
