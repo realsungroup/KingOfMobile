@@ -1,11 +1,19 @@
-define(['durandal/app','knockout','plugins/router','plugins/dialog'], function (app,ko,router,dialog,scanner) {
+define(['durandal/app','knockout','plugins/router','plugins/dialog','mywork/mywork'], function (app,ko,router,dialog,mywork) {
    
   
        return  {
                 activate:function () {
-                        console.log(1);
+                         
+                          mywork.subtitle("mywork3");
 
-                }
+                },
+                 attached:function () {
+                       // console.log(mywork);
+                        mywork.subtitle("mywork3");
+                       
+                       
+
+                },
               
         };
 }); 

@@ -17,6 +17,7 @@ define(['durandal/app','knockout','plugins/router','plugins/dialog','sui'], func
                    
                   
                 },
+                subtitle:ko.observable("mywork"),
                 myworkRouter: ko.computed(function() {
                         return ko.utils.arrayFilter(childRouter.navigationModel(), function(route) {
                          return route.type == 'myworkpage';
