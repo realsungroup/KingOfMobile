@@ -22,70 +22,68 @@ define(['durandal/app','knockout','plugins/router','plugins/dialog','mywork/mywo
 
                 },
                 compositionComplete:function(){
-                    $(function () {
-                
-                var ids = 6;
-            
-                // Mobiscroll Listview initialization
-                $('#listviewUpdate-demo').mobiscroll().listview({
-                    theme: $('#theme').val(),      // Specify theme like: theme: 'ios' or omit setting to use default
-                    lang: $('#language').val(),    // Specify language like: lang: 'pl' or omit setting to use default
-                    display: $('#display').val(),  // Specify display mode like: display: 'bottom' or omit setting to use default
-                    mode: $('#mode').val(),
-                    sortable: true,                // More info about sortable: https://docs.mobiscroll.com/3-0-0_beta2/listview#!opt-sortable
-                    iconSlide: true,               // More info about iconSlide: https://docs.mobiscroll.com/3-0-0_beta2/listview#!opt-iconSlide
-                    striped: true,                 // More info about striped: https://docs.mobiscroll.com/3-0-0_beta2/listview#!opt-striped
-                    stages: [{                     // More info about stages: https://docs.mobiscroll.com/3-0-0_beta2/listview#!opt-stages
-                        percent: 25,
-                        color: 'crimson',
-                        icon: 'checkmark',
-                        text: 'Complete',
-                        action: function (event, inst) {
-                            $('.md-wo-status', event.target).text('Completed');
-                        }
-                    }, {
-                        percent: -50,
-                        color: 'red',
-                        icon: 'remove',
-                        text: 'Delete',
-                        confirm: true,
-                        action: function (event, inst) {
-                            inst.remove(event.target);
-                            return false;
-                        }
-                    }, {
-                        percent: 50,
-                        color: 'green',
-                        icon: 'plus',
-                        text: 'Spawn',
-                        undo: true,                // More info about undo: https://docs.mobiscroll.com/3-0-0_beta2/listview#!methods-undo
-                        action: function (event, inst) {
-                            inst.add(++ids, 'Work order #listviewUpdate-000' + ids + ' created from WO #listviewUpdate-000' + $(event.target).attr('data-id') + '<div class="md-wo-status">Assigned</div>', event.index + 1);
-                        }
-                    }, {
-                        percent: -25,
-                        color: 'olive',
-                        icon: 'clock',
-                        text: 'Pending',
-                        action: function (event, inst) {
-                            $('.md-wo-status', event.target).text('Pending');
-                        }
-                    }],
-                    onItemAdd: function () {       // More info about onItemAdd: https://docs.mobiscroll.com/3-0-0_beta2/listview#!event-onItemAdd
-                        $('#listviewUpdate-demo_note').hide();
-                    },
-                    onItemRemove: function () {    // More info about onItemRemove: https://docs.mobiscroll.com/3-0-0_beta2/listview#!event-onItemRemove
-                        if ($('li', this).length < 2) {
-                            $('#listviewUpdate-demo_note').show();
-                        }
-                    }
-                });
-            
-                $('#listviewUpdate-demo_note').click(function () {
-                    window.location.reload();
-                });
-            
-            });
+                   // Use the settings object to change the theme
+mobiscroll.settings = {
+    theme: 'mobiscroll'
+};
+
+mobiscroll.menustrip('#demo', {
+    theme: 'mobiscroll',
+    lang: '',
+    display: 'top',
+    layout: 4,
+    type: 'tabs',
+    onItemTap: function (event, inst) {
+        notify(event.target.querySelector('.mbsc-ms-item-i-c').innerHTML + ' clicked');
+    },
+    onMarkupReady: function (event, inst) {
+        var i, b,
+            badge,
+            items = event.target.querySelectorAll('.mbsc-ms-item');
+
+        for (i = 0; i < items.length; ++i) {
+            badge = items[i].getAttribute('data-badge');
+            if (badge) {
+                b = document.createElement('span');
+                b.className = 'md-badge';
+                b.innerHTML = badge;
+
+                items[i].appendChild(b);
+            }
+        }
+    }
+});
+
+var notification = document.createElement('div'),
+    notificationTimer;
+
+notification.innerHTML = '<div class="demo-notification"><div class="demo-notification-i"></div></div>';
+notification = notification.firstChild;
+document.body.appendChild(notification);
+
+function notify(text) {
+
+    clearTimeout(notificationTimer);
+
+    notification.style.display = 'block';
+    notification.firstChild.innerHTML = text;
+
+    if (notification.classList.contains('demo-notification-v')) {
+        notification.classList.remove('demo-notification-v');
+        notificationTimer = setTimeout(function () {
+            notification.classList.add('demo-notification-v');
+        }, 200);
+    } else {
+        notification.classList.add('demo-notification-v');
+    }
+
+    notificationTimer = setTimeout(function () {
+        notification.classList.remove('demo-notification-v');
+        notificationTimer = setTimeout(function () {
+            notification.style.display = 'none';
+        }, 200);
+    }, 2000);
+}
                 }
 
               

@@ -10,7 +10,7 @@ requirejs.config({
         'realsun': '../lib/realsun/js',
         'sui':'//g.alicdn.com/msui/sm/0.6.2/js/sm',
         'mywork':'mywork/',
-        'mobiscrolljs':'../lib/mobiscroll/mobiscroll.custom-3.0.0-beta2.min',
+        'mobiscrolljs':'../lib/mobiscroll/mobiscroll.custom-3.0.0-beta6.min',
     },
     shim: {
         'bootstrap': {
