@@ -9,7 +9,8 @@
         'jquery': '../lib/jquery/jquery-1.9.1',
         'realsun': '../lib/realsun/js',
         'sui':'//g.alicdn.com/msui/sm/0.6.2/js/sm',
-        'mywork':'mywork/'
+        'myworkshell':'mywork/',
+        'myworkbase':'mywork/'
     },
     shim: {
         'bootstrap': {

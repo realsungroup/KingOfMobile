@@ -181,7 +181,7 @@ gulp.task("bundle-du", function() {
 //var currentStartpage="domesticfilght.html?user=demo1&ucode=bTqoF2CcMCj7uIOBllZtDw=="; 
 //var currentStartpage="internationalfilght.html?user=demo1&ucode=bTqoF2CcMCj7uIOBllZtDw==";
 
-gulp.task("watch-durandal-debug", ["default-du"], function () {
+gulp.task("watch-debug", ["default-du"], function () {
     
     browserSync.init({
         server: "./"+durandaloutputFolder 

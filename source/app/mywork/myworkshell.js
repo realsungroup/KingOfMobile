@@ -2,7 +2,7 @@ define(['durandal/app','knockout','plugins/router','plugins/dialog','sui'], func
    
   var childRouter = router.createChildRouter()
         .makeRelative({
-            moduleId:'mywork',
+            moduleId:'myworkshell',
             fromParent:true
         }).map(appConfig.app.myworkRouter).buildNavigationModel();
  

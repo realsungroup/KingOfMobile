@@ -5,7 +5,7 @@
         "localbaseUrl": "",
         "hostuser":"demo1",
         "hostucode":"GHgfPHoXCQm3k3m3DY4DqQ==",
-        "hostwebpos":530122554910,
+        "hostwebpos":511032528958,
         "getMethod": "ShowHostTableDatas_Ajax",
         "uploadFileUrl":"http://kingofdinner.realsun.me:8081/rispweb/rispservice/SvcUploadFile2.aspx",
         "httppath":"http://kingofdinner.realsun.me:8081/rispweb/upfiles",
@@ -21,8 +21,10 @@
         "canteenname":"",
         "runmode":"weixin",
         "weixinloginurl":"weixin",
-       
-        "userlanguage":"cn",
+        "openid":"",
+        "defaultpagesize":5,
+        "defaultuserlanguage":"cn",
+        "userConfig":null,
         "myworkRouter": [{ "route": "","title":"mywork1","resid":232122, "moduleId":"viewmodels/mywork1", "nav": true ,"iconCls":"icon icon-settings","type":"myworkpage","viewUrl":"mywork/views/myworkbaseview.html"},
          { "route": "mywork2","title":"mywork2","resid":"133311", "moduleId": "viewmodels/mywork2", "nav": true ,"iconCls":"icon icon-settings","type":"myworkpage"},
                     { "route": "mywork3","title":"mywork3","resid":"33111", "moduleId": "viewmodels/mywork3", "nav": true ,"iconCls":"icon icon-settings","type":"myworkpage"}]

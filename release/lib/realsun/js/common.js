@@ -6,8 +6,7 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
-//http://www.realsun.me:8003/rispweb/
-//http://kingofdinner.realsun.me:8081/rispweb
+ 
 appfunctions.system=new function(){ 
     this.setFullCalendar=function(dayClickCallback){
         
@@ -55,58 +54,46 @@ appfunctions.system=new function(){
 		 
 
     }
-
-    this.setDinnerConfig=function(adata)
+     this.setUserConfig=function(adata)
     {
-        appConfig.kingofdinner.dinnerno=adata.C3_530458675389;
-        appConfig.kingofdinner.dinnername=adata.C3_530458701967;
-        appConfig.kingofdinner.starttime=adata.C3_530459977639;
-        appConfig.kingofdinner.endtime=adata.C3_530459988405;
-        appConfig.kingofdinner.updatetime=adata.C3_530124918144;
-        appConfig.kingofdinner.isopen=adata.C3_530459359201;
-        appConfig.kingofdinner.operator=adata.C3_530459427248;
-        appConfig.kingofdinner.dinnerdates=adata.C3_530749929793;
+        appConfig.app.userConfig=adata;
+       
     }
+     
     this.clearAppConfig=function(){
          appConfig.app.dbs=null;
-         appConfig.app.winno=0;
-         appConfig.app.winname="";
-         appConfig.app.canteenno=0;
-         appConfig.app.canteenname="";
          appConfig.app.user="";
          appConfig.app.upass="";
          appConfig.app.loginUrl="";
          appConfig.app.localbaseUrl="";
+          appConfig.app.userConfig=null;
          localStorage.clear();
     }
     this.setAppConfig=function(adata){
-        appConfig.app.winno=adata.C3_530122591910;
-        appConfig.app.winname=adata.C3_530122607223;
-        appConfig.app.canteenno=adata.C3_530124612816;
-        appConfig.app.canteenname=adata.C3_530124613082;
-        appConfig.app.user=adata.C3_530122651019;
-        appConfig.app.upass=adata.C3_530122663363;
-        appConfig.app.loginUrl=adata.C3_530122630863;
-        appConfig.app.localbaseUrl=adata.C3_530122737504;
-        appConfig.app.uploadFileUrl=adata.C3_530399460189;
-        appConfig.app.httppath=adata.C3_530399471235;
+      
+        appConfig.app.user=adata.C3_511297412801;
+        appConfig.app.upass=adata.C3_532290253136;
+        appConfig.app.loginUrl=adata.C3_532292525011;
+        appConfig.app.localbaseUrl=adata.C3_532292552026;
+        // appConfig.app.uploadFileUrl=adata.C3_530399460189;
+        // appConfig.app.httppath=adata.C3_530399471235;
     }
     this.doWindowlogin=function(text,fnSuccess,fnError){
-                    var temp = mini.decode(text);
+                   
                     var data;
                     var self =this;   
-                    if (typeof(temp)=="string")
+                    if (typeof(text)=="string")
                     {
-                       data=mini.decode(temp);
+                       data=JSON.parse(text);
                     }
                     else
                     {
-                       data=temp;
+                       data=text;
                     }
                     if (data.error==undefined)
                     {
                         if (fnError != null) {
-                            fnError("找不到对应的窗口号,登入失败!");
+                            fnError("登入失败!");
                             return;
                         }
                     }
@@ -114,14 +101,14 @@ appfunctions.system=new function(){
                      if (data.data==undefined)
                     {
                         if (fnError != null) {
-                            fnError("找不到对应的窗口号,登入失败!");
+                            fnError("登入失败!");
                             return;
                         }
                     }  
                       if (data.data.length!==1)
                     {
                         if (fnError != null) {
-                            fnError("找不到对应的窗口号,登入失败!");
+                            fnError("登入失败!");
                             return;
                         }
                     }
@@ -147,22 +134,22 @@ appfunctions.system=new function(){
                         var aRecord=new onerecord(adata.REC_ID,"modified");
                         var records=[];
                         records.push(aRecord);
-                        var json=mini.encode(records);
+                        var json=JSON.stringify(records);
                         dbh.dbSavedata(appConfig.app.hostwebpos,0,json,fnsaved,fnnosave,fnsyserror);
                         function fnsaved(returnText)
                         {
                             try {
                                   if (typeof(returnText)=='object')
                                   {
-                                     self.setDinnerConfig(returnText.data[0]);
+                                     self.setUserConfig(returnText.data[0]);
                                   }
                                    if (typeof(returnText)=='string')
                                   {
-                                     self.setDinnerConfig(JSON.parse(returnText).data[0]);
+                                     self.setUserConfig(JSON.parse(returnText).data[0]);
                                   }
                                   
                                   localStorage.setItem('doWindowlogin',JSON.stringify(returnText));
-                                  fnSuccess("窗口机登入成功!");
+                                  fnSuccess("登入成功!");
                                   return;
                                 
                             } catch (error) {
@@ -188,10 +175,10 @@ appfunctions.system=new function(){
                         }
                     }
     }
-    this.TryWindowlogin=function(loginrandcode,fnSuccess,fnError)
+    this.TryWindowlogin=function(openid,fnSuccess,fnError,fnSyserror)
     {
         var url;
-        var cmswhere="C3_530389677320="+loginrandcode;               
+        var cmswhere="C3_511297475786='"+openid+"'";               
         var self=this;
         url = appConfig.app.baseUrl + "&method=" + appConfig.app.getMethod + "&user=" + appConfig.app.hostuser + "&ucode=" + appConfig.app.hostucode + "&resid=" + appConfig.app.hostwebpos + "&cmswhere=" + cmswhere;
           $.ajax({
@@ -223,7 +210,17 @@ appfunctions.system=new function(){
             jsonp: "jsoncallback",
             success: function (text) {
                 if (text !== "") {
-                    var data = mini.decode(text);
+                    
+                    var data;
+                    if (typeof(text)=='object')
+                    {
+                        data =text;
+                    }
+                    else
+                    {
+                        data = JSON.parse(text);
+                    }
+                   
                     if (data.error !== 0) {
                         if (fnError != null) {
                             fnError(data);
@@ -316,7 +313,17 @@ var dbHelper = (function () {
             jsonp: "jsoncallback",
             success: function (text) {
                 if (text !== "") {
-                    var data = mini.decode(text);
+                    var data;
+                    if (typeof(text)=='object')
+                    {
+                        data =text;
+                    }
+                    else
+                    {
+                        data = JSON.parse(text);
+                    }
+                   
+                   
                     if (data.error == -1) {
                         if (fnError != null) {
                             fnError(data);
@@ -342,9 +349,9 @@ var dbHelper = (function () {
             } });
 
     }
-    dbHelper.prototype.dbGetdata = function (resid, subresid, cmswhere, fnSuccess, fnError, fnSyserror,pageSize,pageIndex) {
+    dbHelper.prototype.dbGetdata = function (resid, subresid, key,cmswhere, fnSuccess, fnError, fnSyserror,pageSize,pageIndex) {
         var url;
-        url = this.baseUrl + "&method=" + this.getMethod + "&user=" + this.user + "&ucode=" + this.ucode + "&resid=" + resid + "&subresid=" + subresid + "&cmswhere=" + cmswhere;
+        url = this.baseUrl + "&method=" + this.getMethod + "&user=" + this.user + "&ucode=" + this.ucode + "&resid=" + resid + "&subresid=" + subresid + "&cmswhere=" + cmswhere+"&key=" +key;
         if ((pageSize >0))
         {
              url=url+"&pageIndex="+pageIndex+"&pageSize="+pageSize;
@@ -356,7 +363,16 @@ var dbHelper = (function () {
             jsonp: "jsoncallback",
             success: function (text) {
                 if (text !== "") {
-                    var data = mini.decode(text);
+                    var data;
+                    if (typeof(text)=='object')
+                    {
+                        data =text;
+                    }
+                    else
+                    {
+                        data = JSON.parse(text);
+                    }
+                   
                     if (data.error == -1) {
                         if (fnError != null) {
                             fnError(data);

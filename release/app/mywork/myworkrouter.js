@@ -8,17 +8,26 @@ define(['durandal/app','knockout','plugins/router','plugins/dialog','sui'], func
  
        return  {
                activate:function () {
-                   
+                         
+                          
+                         
                },
                 router: childRouter,  
                 attached:function(){
                 },
                 getCurroute:function(that){
                     var strmoduleid=that.__moduleId__;
+                    //根据路由模块id查询当前路由
                     var curRoute=this.router.routes.filter(function(route){return route.moduleId==strmoduleid})[0];
-                    this.subtitle(curRoute.title);       
+                    
+                           
                     return curRoute;
                     
+                },
+                setSubtitle:function(title)
+                {
+                    //刷新当前子标题
+                    this.subtitle(title);
                 },
                 subtitle:ko.observable(""),
                
