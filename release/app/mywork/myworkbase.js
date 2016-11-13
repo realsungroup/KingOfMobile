@@ -92,7 +92,7 @@ define(['durandal/app','knockout','plugins/router','plugins/dialog','mywork/mywo
                 },
                 compositionComplete:function(){ 
                          
-
+                          
                 },
                 setModuleid:function(moduleid)
                 {

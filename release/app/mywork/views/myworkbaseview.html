@@ -1,4 +1,80 @@
 <div>baseview</div>
-<p data-bind="text: lastError"></p>
-<p data-bind="text: '记录数'+total().toString()"></p>
-<p data-bind="text: '当前页码'+pageIndex.toString()"></p>
+ 
+  <!--<ons-toolbar>
+    <div class="center">Lists</div>
+  </ons-toolbar>-->
+
+  <ons-list>
+    <ons-list-header>错误信息</ons-list-header>
+    <ons-list-item tappable data-bind="text: lastError"> </ons-list-item>
+    <ons-list-header>记录数</ons-list-header>
+    <ons-list-item data-bind="text:  total().toString()  " >   </ons-list-item>
+     <ons-list-header>当前页面</ons-list-header>
+    <ons-list-item data-bind="text:pageIndex.toString()"> </ons-list-item>
+
+  
+
+    <ons-list-header>Chevron</ons-list-header>
+    <ons-list-item modifier="chevron" tappable > Chevron</ons-list-item>
+
+    <ons-list-header>Thumbnails and titles</ons-list-header>
+    <ons-list-item>
+      <div class="left">
+        <img class="list__item__thumbnail" src="http://placekitten.com/g/40/40">
+      </div>
+      <div class="center">
+        <span class="list__item__title">Cutest kitty</span><span class="list__item__subtitle">On the Internet</span>
+      </div>
+    </ons-list-item>
+
+    <ons-list-header>Icons</ons-list-header>
+    <ons-list-item>
+      <div class="left">
+        <ons-icon icon="md-face" class="list__item__icon"></ons-icon>
+      </div>
+      <div class="center">
+        Icon
+      </div>
+    </ons-list-item>
+
+    <ons-list-header>Switch</ons-list-header>
+    <ons-list-item>
+      <div class="center">
+        Turn it on
+      </div>
+      <div class="right">
+        <ons-switch></ons-switch>
+      </div>
+    </ons-list-item>
+
+    <ons-list-header>Switch and icon</ons-list-header>
+    <ons-list-item>
+      <div class="left">
+        <ons-icon icon="md-face" class="list__item__icon"></ons-icon>
+      </div>
+      <div class="center">
+        Icon and switch
+      </div>
+      <div class="right">
+        <ons-switch></ons-switch>
+      </div>
+    </ons-list-item>
+
+    <ons-list-header>No divider</ons-list-header>
+    <ons-list-item modifier="nodivider">Item A</ons-list-item>
+    <ons-list-item modifier="nodivider">Item B</ons-list-item>
+
+    <ons-list-header>Long divider</ons-list-header>
+    <ons-list-item modifier="longdivider">Item A</ons-list-item>
+    <ons-list-item modifier="longdivider">Item B</ons-list-item>
+  </ons-list>
+
+  <br />
+<!--
+  <ons-list modifier="inset">
+    <ons-list-header>Inset list</ons-list-header>
+    <ons-list-item modifier="longdivider">Item A</ons-list-item>
+    <ons-list-item modifier="longdivider">Item B</ons-list-item>
+  </ons-list>-->
+
+  <br />
