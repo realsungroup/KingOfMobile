@@ -1,5 +1,6 @@
 
-<nav class="navbar navbar-default" role="navigation">
+<!--<nav class="navbar navbar-default" role="navigation">
+ 
 	<div class="container-fluid"> 
 	<div class="navbar-header">
 		<button type="button" class="navbar-toggle" data-toggle="collapse"
@@ -13,15 +14,22 @@
 	</div>
 	<div class="collapse navbar-collapse" id="example-navbar-collapse">
 		<ul class="nav navbar-nav">
-			  <!--ko foreach: myworkRouter-->
+			  ko foreach: myworkRouter
 			     <li data-bind="css: { active: isActive }"> <a data-bind="attr: { href: hash}, text: title"></a></li>
-		    <!--/ko-->
+		    /ko
 			 
 		</ul>
 	</div>
 	</div>
-</nav>
-
- <div class="col-md-10" style="padding: 0">
+</nav>-->
+ 
+ <div class="buttons-tab" data-bind="foreach : myworkRouter">
+    <a data-bind="attr: { href: hash,id:hash}, text: title,css: { active: isActive }" class="tab-link button"   > </a>
+     
+  </div>
+   
+  
+  
+ <div class="page-host col-md-10" style="padding: 0">
       <!--ko router: { transition:'entrance', cacheViews:true }--><!--/ko-->
 </div>

@@ -1,24 +1,24 @@
-﻿<div>
-  <nav class="bar bar-nav navbar navbar-default" role="navigation">
+﻿
+<nav class="bar bar-nav navbar navbar-default" role="navigation">
     <a class="button button-link button-nav pull-left" href="javascript:history.go(-1);" data-transition='slide-out'>
       <span class="icon icon-left"></span>
       返回
     </a>
       <h1 class="title" data-bind="text:router.activeInstruction().config.title"></h1>
-	    <div class="container-fluid" data-bind="visible:router.activeInstruction().config.title=='我的工作'" > 
-	         
-	  </div>
+	    <!--<div class="container-fluid" data-bind="visible:router.activeInstruction().config.title=='我的工作'" > </div>-->
 </nav>
-  <nav class="bar bar-tab" data-bind="foreach: rootRouter">
+
+<nav class="bar bar-tab" data-bind="foreach: rootRouter">
     
                <a class="tab-item"  data-bind="css: { active: isActive },attr: { href: hash }">
                  <span data-bind="attr: {class:iconCls}"></span>
                  <span class="tab-label"  data-bind="text: title"></span>
                </a>
   </nav>
-
-<!--page-->
+  <!--page-->
 <div class="page-host" data-bind="router: { transition:'entrance' }"></div>
  
+
+
 
 
