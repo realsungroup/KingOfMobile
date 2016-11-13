@@ -376,6 +376,7 @@ var dbHelper = (function () {
                     if (data.error == -1) {
                         if (fnError != null) {
                             fnError(data);
+                            return;
                         }
                     }
                     var adata = [];

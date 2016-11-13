@@ -89,7 +89,7 @@ define(['durandal/app','knockout','plugins/router','plugins/dialog'], function (
                      var baseUrl=appConfig.app.localbaseUrl;
                      var dbs=new dbHelper(baseUrl,data.user,data.ucode);
                      appConfig.app.dbs=dbs;
-                     router.navigate('#mywork');
+                     router.navigate(appConfig.app.curRouterHash);
                     
                 }
                 function fnError(data){

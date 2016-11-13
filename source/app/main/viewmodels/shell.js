@@ -1,11 +1,6 @@
 ﻿define(['plugins/router', 'durandal/app','knockout'], function (router, app,ko) {
 
-    var router= router.map([
-                { route: '', title:'首页', moduleId: 'main/viewmodels/welcome', nav: true,iconCls:'icon icon-home' ,type:'root'},
-                { route: 'mywork*detail',title:'我的工作', moduleId: 'mywork/myworkshell', nav: true ,iconCls:'icon icon-me',type:'root'},
-                { route: 'setting',title:'设置', moduleId: 'main/viewmodels/setting', nav: true ,iconCls:'icon icon-settings',type:'root'}
-                
-            ]).buildNavigationModel();
+    var router= router.map(appConfig.app.mainRouter).buildNavigationModel();
      
     return {
         router: router,

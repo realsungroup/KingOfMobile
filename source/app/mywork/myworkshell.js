@@ -1,4 +1,4 @@
-define(['durandal/app','knockout','plugins/router','plugins/dialog','sui'], function (app,ko,router,dialog,scanner) {
+define(['durandal/app','knockout','plugins/router','plugins/dialog',], function (app,ko,router,dialog) {
    
   var childRouter = router.createChildRouter()
         .makeRelative({
