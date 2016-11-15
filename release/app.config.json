@@ -12,6 +12,7 @@
         "saveMethod":"SaveData_Ajax",
         "getBysqlMethod":"Ajax_QueryBySql",
         "debug":true,
+        "weixindebug":false,
         "dbs":null,
         "user":"",
         "upass":"",

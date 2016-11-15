@@ -10,7 +10,7 @@ define(['durandal/app','knockout','plugins/router','plugins/dialog'], function (
                  activate:function(e){
                     if (appConfig.app.runmode=="weixin")
                     {
-                         if (!appConfig.app.debug)
+                         if (!appConfig.app.weixindebug)
                             {
                                 if (appConfig.app.openid==""||appConfig.app.openid==null){
                                     var aopenid="";

@@ -62,7 +62,7 @@ define(['durandal/app','knockout','plugins/router','plugins/dialog','mywork/mywo
                          appConfig.app.curRouterHash=this.myrouter.hash;
                          myworkshell.setSubtitle(this.myrouter.title);
                          if (appConfig.app.runmode=="weixin"){
-                            if (appConfig.app.debug){
+                            if (appConfig.app.weixindebug){
                                appConfig.app.openid =this.openid
                             }
                             //weixin 登入  
