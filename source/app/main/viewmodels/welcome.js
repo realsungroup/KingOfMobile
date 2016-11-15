@@ -7,8 +7,33 @@ define(['durandal/app','knockout','plugins/router','plugins/dialog'], function (
                  user:user,
                  upass:upass,
                  openid:'oZ8EXwjRjlwsZdv_HdyU5i_rkmGE',
-                 activate:function(){
-                     
+                 activate:function(e){
+                    if (appConfig.app.runmode=="weixin")
+                    {
+                         if (!appConfig.app.debug)
+                            {
+                                var aopenid="";
+                                var hash="";
+                                aopenid=getQueryString("openid");
+                                hash=getQueryString("hash");
+                                if  (aopenid==""||aopenid==null){
+                                    router.navigate(appConfig.app.weixinOAuthUrl+"?hash=#");
+                                }
+                                else{
+                                    appConfig.app.openid=aopenid;
+                                    this.openid=aopenid;
+                                    var stateObject = {};
+                                    var title = "";
+                                    var newUrl ="/#";
+                                    history.pushState(stateObject,title,newUrl);
+                                    if (hash!=="#")
+                                    {
+                                         router.navigate("#"+hash);
+                                    }
+                                }
+                            }
+                         
+                     }
                      if (localStorage.getItem('doWindowlogin')==undefined)
                      {
                          appConfig.appfunction.system.clearAppConfig();
@@ -58,13 +83,14 @@ define(['durandal/app','knockout','plugins/router','plugins/dialog'], function (
                     var self=this;
                     
                     
-                    if (appConfig.app.loginUrl==""){
+                    if (appConfig.app.dbs==null){
                       
-                                appConfig.appfunction.system.TryWindowlogin(self.openid,fnSuccess,fnError);
+                                appConfig.appfunction.system.doLoginbyopenid(self.openid,fnSuccess,fnError);
                                 function fnSuccess(){
-                                     self.user(appConfig.app.user);
-                                     self.upass(appConfig.app.upass);
+                                     self.user(appConfig.app.userConfig.LoginID);
+                                     self.upass(appConfig.app.userConfig.Password);
                                      self.dologin();
+                                      
                                 }
                                 function fnError(error){
 
@@ -86,7 +112,7 @@ define(['durandal/app','knockout','plugins/router','plugins/dialog'], function (
                
                 appConfig.appfunction.system.doLogin(this.user(),this.upass(),fnSuccess, fnError, fnSyserror);
                 function fnSuccess(data){
-                     var baseUrl=appConfig.app.localbaseUrl;
+                     var baseUrl=appConfig.app.userProfile.EMP_LOGIN_URL;
                      var dbs=new dbHelper(baseUrl,data.user,data.ucode);
                      appConfig.app.dbs=dbs;
                      router.navigate(appConfig.app.curRouterHash);

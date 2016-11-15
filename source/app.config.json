@@ -1,11 +1,11 @@
 {
     "app": {
-        "loginUrl": "",
+        "loginUrl":"http://kingofdinner.realsun.me:8081/rispweb/rispservice/apiSvrLogin.aspx?",
         "baseUrl": "http://kingofdinner.realsun.me:8081/rispweb/risphost/data/AjaxService.aspx?uiver=200&dynlogin=1",
         "localbaseUrl": "",
         "hostuser":"demo1",
         "hostucode":"GHgfPHoXCQm3k3m3DY4DqQ==",
-        "hostwebpos":511032528958,
+        "hostwebpos":1300,
         "getMethod": "ShowHostTableDatas_Ajax",
         "uploadFileUrl":"http://kingofdinner.realsun.me:8081/rispweb/rispservice/SvcUploadFile2.aspx",
         "httppath":"http://kingofdinner.realsun.me:8081/rispweb/upfiles",
@@ -20,14 +20,17 @@
         "canteenno":0,
         "canteenname":"",
         "runmode":"weixin",
+        "weixinOAuthUrl":"http://www.realsun.me/LyAuth/OAuth?returnUrl=http://kingofdinner.realsun.me:8089/",
+        
         "weixinloginurl":"weixin",
         "openid":"",
         "defaultpagesize":5,
         "defaultuserlanguage":"cn",
         "userConfig":null,
+        "userProfile":null,
         "curRouterHash":"#mywork",
         "mainRouter":[
-                { "route": "", "title":"首页", "moduleId": "main/viewmodels/welcome", "nav": true,"iconCls":"icon icon-home" ,"type":"root"},
+                { "route": "", "title":"首页", "moduleId": "main/viewmodels/welcome", "nav": true,"iconCls":"icon icon-home" ,"type":"root", "hash":"#welcome"},
                 { "route": "mywork*detail","title":"我的工作", "moduleId": "mywork/myworkshell", "nav": true ,"iconCls":"icon icon-me","type":"root"},
                 { "route": "setting","title":"设置", "moduleId": "main/viewmodels/setting", "nav": true ,"iconCls":"icon icon-settings","type":"root"}
                 

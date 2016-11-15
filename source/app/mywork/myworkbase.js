@@ -54,34 +54,61 @@ define(['durandal/app','knockout','plugins/router','plugins/dialog','mywork/mywo
         
         };
        return  {
-
+                openid:"oZ8EXwjRjlwsZdv_HdyU5i_rkmGE",
                 activate:function () {
                        
-                        var navCls=$("#example-navbar-collapse").attr("class");
-                          if (navCls=="navbar-collapse collapse in")
-                                {
-                                        $(".navbar-toggle").trigger("click");
-                                }
+                         var self=this;
                          this.myrouter=myworkshell.getCurroute(this);
                          appConfig.app.curRouterHash=this.myrouter.hash;
                          myworkshell.setSubtitle(this.myrouter.title);
-                        
-                         if ( appConfig.app.dbs==null)
-                        {
+                         if (appConfig.app.runmode=="weixin"){
+                            if (appConfig.app.debug){
+                               appConfig.app.openid =this.openid
+                            }
+                            //weixin 登入  
+                            if (appConfig.app.openid==""||appConfig.app.openid==null)
+                                {
+                                    
+                                    router.navigate(appConfig.app.weixinOAuthUrl+"?hash="+appConfig.app.curRouterHash.replace("#",""));
+                                }
+                                else
+                                {
+                                    var stateObject = {};
+                                    var title = "";
+                                    var newUrl ="/"+appConfig.app.curRouterHash;
+                                    history.pushState(stateObject,title,newUrl);
+
+                                }
+
+                                if ( appConfig.app.dbs==null)
+                                {
+                                    
+                                    appConfig.appfunction.system.doLoginbyopenid(appConfig.app.openid,fnSuccess,fnError);
+                                    function fnSuccess(){
+                                            var baseUrl=appConfig.app.userProfile.EMP_LOGIN_URL;
+                                            var dbs=new dbHelper(baseUrl,appConfig.app.userProfile.EMP_ID,appConfig.app.userProfile.EMP_PASS);
+                                            appConfig.app.dbs=dbs;
+                                            self.pageIndexChanged(self.pageIndex);
+                                        }
+                                    function fnError(error){
+
+                                            dialog.showMessage(error,"新同事");
+                                            appConfig.app.dbs=null;
+                                            router.navigate('#');
                             
-                        
-                            
-                        }
-                        else
-                        {
-                            this.pageIndexChanged(this.pageIndex);
-                        }
+                                        }
+                                }
+                                else
+                                {
+                                    self.pageIndexChanged(self.pageIndex);
+                                }
+                         }
                 },
                 attached:function () {    
                         if ( appConfig.app.dbs==null)
                         {
                         
-                            router.navigate('#');
+                           // router.navigate('#');
                             
                         }
                         else

@@ -11,7 +11,7 @@ appfunctions.system=new function(){
     this.setFullCalendar=function(dayClickCallback){
         
 			    jQuery(document).ready(function() {
-	
+	           
 				var date = new Date();
 				var d = date.getDate();
 				var m = date.getMonth();
@@ -59,24 +59,21 @@ appfunctions.system=new function(){
         appConfig.app.userConfig=adata;
        
     }
+    this.setUserprofile=function(adata)
+    {
+        appConfig.app.userProfile=adata;
+       
+    }
      
     this.clearAppConfig=function(){
          appConfig.app.dbs=null;
-         appConfig.app.user="";
-         appConfig.app.upass="";
-         appConfig.app.loginUrl="";
-         appConfig.app.localbaseUrl="";
-          appConfig.app.userConfig=null;
+         appConfig.app.userConfig=null;
+         appConfig.app.userProfile=null;
          localStorage.clear();
     }
     this.setAppConfig=function(adata){
-      
-        appConfig.app.user=adata.C3_511297412801;
-        appConfig.app.upass=adata.C3_532290253136;
-        appConfig.app.loginUrl=adata.C3_532292525011;
-        appConfig.app.localbaseUrl=adata.C3_532292552026;
-        // appConfig.app.uploadFileUrl=adata.C3_530399460189;
-        // appConfig.app.httppath=adata.C3_530399471235;
+         appConfig.app.userConfig=adata;
+         appConfig.app.userProfile=adata;
     }
     this.doWindowlogin=function(text,fnSuccess,fnError){
                    
@@ -105,7 +102,7 @@ appfunctions.system=new function(){
                             return;
                         }
                     }  
-                      if (data.data.length!==1)
+                      if (data.data==null||data.data==undefined)
                     {
                         if (fnError != null) {
                             fnError("登入失败!");
@@ -124,16 +121,19 @@ appfunctions.system=new function(){
                    
                   
                    
-                   adata = data.data[0];
+                   adata = data.data;
                  
                      
                    
                     if (fnSuccess != null) {
                         self.setAppConfig(adata);
-                        var dbh=new dbHelper(appConfig.app.baseUrl,appConfig.app.hostuser,appConfig.app.hostucode);
+                        var dbh=new dbHelper(appConfig.app.baseUrl,appConfig.app.userConfig.LoginID,appConfig.app.userConfig.PassEncrypted);
                         var aRecord=new onerecord(adata.REC_ID,"modified");
                         var records=[];
-                        records.push(aRecord);
+                        var aUser={"EMP_NAME":""};
+                        aUser.EMP_NAME=appConfig.app.userConfig.Name;
+                        $.extend(aUser,aRecord);
+                        records.push(aUser);
                         var json=JSON.stringify(records);
                         dbh.dbSavedata(appConfig.app.hostwebpos,0,json,fnsaved,fnnosave,fnsyserror);
                         function fnsaved(returnText)
@@ -141,22 +141,23 @@ appfunctions.system=new function(){
                             try {
                                   if (typeof(returnText)=='object')
                                   {
-                                     self.setUserConfig(returnText.data[0]);
+                                     self.setUserprofile(returnText.data[0]);
                                   }
                                    if (typeof(returnText)=='string')
                                   {
-                                     self.setUserConfig(JSON.parse(returnText).data[0]);
+                                     self.setUserprofile(JSON.parse(returnText).data[0]);
                                   }
                                   
-                                  localStorage.setItem('doWindowlogin',JSON.stringify(returnText));
+                                  localStorage.setItem('doWindowlogin',JSON.stringify(appConfig.app.userConfig));
                                   fnSuccess("登入成功!");
                                   return;
                                 
                             } catch (error) {
                                   
                                     
-                                self.clearAppConfig();
+                               
                                 fnError(JSON.stringify(error));
+                                self.clearAppConfig();
                                 return ;
                             }
                              
@@ -200,6 +201,49 @@ appfunctions.system=new function(){
                 }
             } });
     }
+    this.doLoginbyopenid=function(openid,fnSuccess, fnError, fnSyserror) {
+         var url;
+         var self=this;
+           url = appConfig.app.loginUrl +"&apitoken=KingOfDinner123456789&clienttype=mobile&openid="+openid;
+           $.ajax({
+            url: url,
+            dataType: "jsonp",
+            jsonp: "jsoncallback",
+            success: function (text) {
+                if (text !== "") {
+                    
+                    var data;
+                    if (typeof(text)=='object')
+                    {
+                        data =text;
+                    }
+                    else
+                    {
+                        data = JSON.parse(text);
+                    }
+                    
+                    if (data.error !== 0) {
+                        if (fnError != null) {
+                            fnError(data);
+                        }
+                    }
+                    else{  
+                        if (fnSuccess != null) {
+                          
+                            //fnSuccess(data);
+                             self.doWindowlogin(text,fnSuccess,fnError);
+                          }
+                        }
+                   }
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                if (fnSyserror != null) {
+                    fnSyserror(jqXHR, textStatus, errorThrown);
+                }
+            } });
+
+     
+    }
     this.doLogin=function(user,upass,fnSuccess, fnError, fnSyserror) {
 
            var url;
@@ -241,10 +285,6 @@ appfunctions.system=new function(){
             } });
 
      };
-
-
-
-
 }
 appfunctions.uploadFile = new function () {
     var uploadFile = this;
