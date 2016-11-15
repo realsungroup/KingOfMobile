@@ -84,11 +84,18 @@ define(['durandal/app','knockout','plugins/router','plugins/dialog','mywork/mywo
                             this.pageIndexChanged(this.pageIndex);
                             
                         }
+                        else{
+                            //跳转首页登入
+                         router.navigate('/#')}
                         
                         
 
                 },
-                attached:function () {    
+                attached:function () {  
+                    if ( appConfig.app.dbs!==null)
+                    {
+                         this.pageIndexChanged(this.pageIndex);
+                    }  
                       
 
                 },

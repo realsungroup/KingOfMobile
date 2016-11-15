@@ -7,5 +7,6 @@ define(['durandal/app','knockout','plugins/router','plugins/dialog','mywork/mywo
       
         
         works1=jquery.extend(works1,myworkbase);
-       return works1;
+       return works1; 
+       
 }); 
