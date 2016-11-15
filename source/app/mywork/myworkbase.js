@@ -54,19 +54,18 @@ define(['durandal/app','knockout','plugins/router','plugins/dialog','mywork/mywo
         
         };
        return  {
-                openid:"oZ8EXwjRjlwsZdv_HdyU5i_rkmGE",
+                
                 activate:function () {
                        
                          var self=this;
+                         var openid="";
                          this.myrouter=myworkshell.getCurroute(this);
                          appConfig.app.curRouterHash=this.myrouter.hash;
                          myworkshell.setSubtitle(this.myrouter.title);
                          if (appConfig.app.runmode=="weixin"){
-                            if (appConfig.app.weixindebug){
-                               appConfig.app.openid =this.openid
-                            }
+                            openid=appConfig.appfunction.system.getWeixinOpenid();
                             //weixin 登入  
-                            if (appConfig.app.openid==""||appConfig.app.openid==null)
+                            if (openid==""||openid==null)
                                 {
                                     
                                     router.navigate(appConfig.app.weixinOAuthUrl+"?hash="+appConfig.app.curRouterHash.replace("#",""));

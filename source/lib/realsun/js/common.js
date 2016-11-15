@@ -64,6 +64,18 @@ appfunctions.system=new function(){
         appConfig.app.userProfile=adata;
        
     }
+    this.setWeixinOpenid=function(openid)
+    {
+        appConfig.app.openid=openid;
+    }
+     this.getWeixinOpenid=function()
+    {
+        if (appConfig.app.weixindebug)
+           {
+              return appConfig.app.debugopenid;
+           }
+           return appConfig.app.openid;
+    }
      
     this.clearAppConfig=function(){
          appConfig.app.dbs=null;

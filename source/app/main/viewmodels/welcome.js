@@ -6,30 +6,30 @@ define(['durandal/app','knockout','plugins/router','plugins/dialog'], function (
        return  {
                  user:user,
                  upass:upass,
-                 openid:'oZ8EXwjRjlwsZdv_HdyU5i_rkmGE',
+                 openid:'',
                  activate:function(e){
                     if (appConfig.app.runmode=="weixin")
                     {
-                         if (!appConfig.app.weixindebug)
-                            {
-                                if (appConfig.app.openid==""||appConfig.app.openid==null){
+
+                         this.openid=appConfig.appfunction.system.getWeixinOpenid();
+                         if (this.openid==""||this.openid==null){
                                     var aopenid="";
                                     var hash="";
                                     aopenid=getQueryString("openid");
                                     hash=getQueryString("hash");
                                     if  (aopenid==""||aopenid==null){
+
                                         router.navigate(appConfig.app.weixinOAuthUrl+"?hash=");
                                     }
                                     else{
-                                        appConfig.app.openid=aopenid;
                                         this.openid=aopenid;
+                                        appConfig.appfunction.system.setWeixinOpenid(aopenid);
                                         var stateObject = {};
                                         var title = "";
                                         var newUrl ="/#";
                                         history.pushState(stateObject,title,newUrl);
                                         if (hash!=="")
                                         { 
-                                            
                                             newUrl="/#"+hash;
                                             appConfig.app.curRouterHash=newUrl;
                                             
@@ -38,7 +38,7 @@ define(['durandal/app','knockout','plugins/router','plugins/dialog'], function (
                                         
                                       }
                                 }
-                            }
+                           
                          
                      }
                      if (localStorage.getItem('doWindowlogin')==undefined)
@@ -92,7 +92,7 @@ define(['durandal/app','knockout','plugins/router','plugins/dialog'], function (
                     
                     if (appConfig.app.dbs==null){
                       
-                                appConfig.appfunction.system.doLoginbyopenid(appConfig.app.openid,fnSuccess,fnError);
+                                appConfig.appfunction.system.doLoginbyopenid(this.openid,fnSuccess,fnError);
                                 function fnSuccess(){
                                      self.user(appConfig.app.userConfig.LoginID);
                                      self.upass(appConfig.app.userConfig.Password);
@@ -101,7 +101,7 @@ define(['durandal/app','knockout','plugins/router','plugins/dialog'], function (
                                 }
                                 function fnError(error){
 
-                                    dialog.showMessage(error,"新同事");
+                                    dialog.showMessage(error.message,"新同事");
                                     appConfig.app.dbs=null;
                                     router.navigate('#');
                      

@@ -22,9 +22,9 @@
         "canteenname":"",
         "runmode":"weixin",
         "weixinOAuthUrl":"http://www.realsun.me/LyAuth/OAuth?returnUrl=http://kingofdinner.realsun.me:8089/",
-        
-        "weixinloginurl":"weixin",
+        "debugopenid":"oZ8EXwjRjlwsZdv_HdyU5i_rkmGE",
         "openid":"",
+        "weixinloginurl":"weixin",
         "defaultpagesize":5,
         "defaultuserlanguage":"cn",
         "userConfig":null,
