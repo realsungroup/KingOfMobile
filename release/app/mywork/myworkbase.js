@@ -70,51 +70,27 @@ define(['durandal/app','knockout','plugins/router','plugins/dialog','mywork/mywo
                                 {
                                     
                                     router.navigate(appConfig.app.weixinOAuthUrl+"?hash="+appConfig.app.curRouterHash.replace("#",""));
+                                    return ;
                                 }
                                 else
                                 {
-                                    var stateObject = {};
-                                    var title = "";
-                                    var newUrl ="/"+appConfig.app.curRouterHash;
-                                    history.pushState(stateObject,title,newUrl);
+                                   
 
                                 }
 
-                                if ( appConfig.app.dbs==null)
-                                {
-                                    
-                                    appConfig.appfunction.system.doLoginbyopenid(appConfig.app.openid,fnSuccess,fnError);
-                                    function fnSuccess(){
-                                            var baseUrl=appConfig.app.userProfile.EMP_LOGIN_URL;
-                                            var dbs=new dbHelper(baseUrl,appConfig.app.userProfile.EMP_ID,appConfig.app.userProfile.EMP_PASS);
-                                            appConfig.app.dbs=dbs;
-                                            self.pageIndexChanged(self.pageIndex);
-                                        }
-                                    function fnError(error){
-
-                                            dialog.showMessage(error,"新同事");
-                                            appConfig.app.dbs=null;
-                                            router.navigate('#');
-                            
-                                        }
-                                }
-                                else
-                                {
-                                    self.pageIndexChanged(self.pageIndex);
-                                }
                          }
-                },
-                attached:function () {    
-                        if ( appConfig.app.dbs==null)
+                        if ( appConfig.app.dbs!==null)
                         {
                         
-                           // router.navigate('#');
+                            this.pageIndexChanged(this.pageIndex);
                             
                         }
-                        else
-                        {
-                            this.pageIndexChanged(this.pageIndex);
-                        }
+                        
+                        
+
+                },
+                attached:function () {    
+                      
 
                 },
                 compositionComplete:function(){ 

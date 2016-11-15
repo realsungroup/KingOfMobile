@@ -12,24 +12,31 @@ define(['durandal/app','knockout','plugins/router','plugins/dialog'], function (
                     {
                          if (!appConfig.app.debug)
                             {
-                                var aopenid="";
-                                var hash="";
-                                aopenid=getQueryString("openid");
-                                hash=getQueryString("hash");
-                                if  (aopenid==""||aopenid==null){
-                                    router.navigate(appConfig.app.weixinOAuthUrl+"?hash=#");
-                                }
-                                else{
-                                    appConfig.app.openid=aopenid;
-                                    this.openid=aopenid;
-                                    var stateObject = {};
-                                    var title = "";
-                                    var newUrl ="/#";
-                                    history.pushState(stateObject,title,newUrl);
-                                    if (hash!=="#")
-                                    {
-                                         router.navigate("#"+hash);
+                                if (appConfig.app.openid==""||appConfig.app.openid==null){
+                                    var aopenid="";
+                                    var hash="";
+                                    aopenid=getQueryString("openid");
+                                    hash=getQueryString("hash");
+                                    if  (aopenid==""||aopenid==null){
+                                        router.navigate(appConfig.app.weixinOAuthUrl+"?hash=");
                                     }
+                                    else{
+                                        appConfig.app.openid=aopenid;
+                                        this.openid=aopenid;
+                                        var stateObject = {};
+                                        var title = "";
+                                        var newUrl ="/#";
+                                        history.pushState(stateObject,title,newUrl);
+                                        if (hash!=="")
+                                        { 
+                                            
+                                            newUrl="/#"+hash;
+                                            appConfig.app.curRouterHash=newUrl;
+                                            
+                                            
+                                        }
+                                        
+                                      }
                                 }
                             }
                          
@@ -85,7 +92,7 @@ define(['durandal/app','knockout','plugins/router','plugins/dialog'], function (
                     
                     if (appConfig.app.dbs==null){
                       
-                                appConfig.appfunction.system.doLoginbyopenid(self.openid,fnSuccess,fnError);
+                                appConfig.appfunction.system.doLoginbyopenid(appConfig.app.openid,fnSuccess,fnError);
                                 function fnSuccess(){
                                      self.user(appConfig.app.userConfig.LoginID);
                                      self.upass(appConfig.app.userConfig.Password);
