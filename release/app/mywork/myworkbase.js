@@ -54,14 +54,14 @@ define(['durandal/app','knockout','plugins/router','plugins/dialog','mywork/mywo
         
         };
        return  {
-                
+                myrouter:null,
                 activate:function () {
                        
                          var self=this;
                          var openid="";
-                         this.myrouter=myworkshell.getCurroute(this);
-                         appConfig.app.curRouterHash=this.myrouter.hash;
-                         myworkshell.setSubtitle(this.myrouter.title);
+                         self.myrouter=myworkshell.getCurroute(self);
+                         appConfig.app.curRouterHash=self.myrouter.hash;
+                         myworkshell.setSubtitle(self.myrouter.title);
                          if (appConfig.app.runmode=="weixin"){
                             openid=appConfig.appfunction.system.getWeixinOpenid();
                             //weixin 登入  
@@ -81,31 +81,44 @@ define(['durandal/app','knockout','plugins/router','plugins/dialog','mywork/mywo
                         if ( appConfig.app.dbs!==null)
                         {
                         
-                            this.pageIndexChanged(this.pageIndex);
+                            self.pageIndexChanged(self.pageIndex);
                             
                         }
                         else{
                             //跳转首页登入
                          router.navigate('/#')}
                         
-                        
+                        if (self._activate!==undefined){
+                            if (self._activate){
+                                self._activate();}
+                            }
 
                 },
                 attached:function () {  
+                    
+                     var self=this;
+                      
                     if ( appConfig.app.dbs!==null)
                     {
-                         this.pageIndexChanged(this.pageIndex);
+                         self.pageIndexChanged(self.pageIndex);
                     }  
-                      
-
+                  if (self._attached!==undefined){
+                      if (self._attached){
+                        self._attached();}
+                    }
+                   
                 },
                 compositionComplete:function(){ 
                          
-                          
+                 if (self._compositionComplete!==undefined){
+                      if (self._compositionComplete){
+                        self._compositionComplete();}
+                    }
                 },
                 setModuleid:function(moduleid)
                 {
-                        this.__moduleId__='mywork/viewmodels/'+moduleid;
+                        var self=this;
+                        self.__moduleId__='mywork/viewmodels/'+moduleid;
                 },
                 rows: ko.observableArray([]),
                 pageSize:appConfig.app.defaultpagesize,
@@ -114,12 +127,14 @@ define(['durandal/app','knockout','plugins/router','plugins/dialog','mywork/mywo
                 lastError:ko.observable(""),
                 total:ko.observable(0),
                 maxPageIndex: function(){ return ko.pureComputed(function() {
-                     return Math.ceil(ko.utils.unwrapObservable(this.total) / this.pageSize) - 1;
-                }, this);},
+                     var self=this;
+                     return Math.ceil(ko.utils.unwrapObservable(self.total) / self.pageSize) - 1;
+                }, self);},
                 pageIndex:1,
                 pageIndexChanged:function(index){   
-                   this.pageIndex=index;
-                   fetchPage(this);      
+                   var self=this;
+                   self.pageIndex=index;
+                   fetchPage(self);      
                 },
 
               

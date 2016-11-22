@@ -3,10 +3,15 @@ define(['durandal/app','knockout','plugins/router','plugins/dialog','mywork/mywo
        var works1={
                id:122,
                clicktest:function (){alert("ddd");}
+              
        };
       
         
         works1=jquery.extend(works1,myworkbase);
+       
+        
+        
+       
        return works1; 
        
 }); 

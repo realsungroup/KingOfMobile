@@ -31,11 +31,9 @@ define(['durandal/system', 'durandal/app', 'durandal/viewLocator', 'bootstrap','
         viewLocator.useConvention();
          $.getJSON("app.config.json",function(data,textStatus,hr){
          appConfig=data;
-         appConfig.appfunction=appfunctions;
-        
+         appConfig.appfunction=appfunctions; 
          system.debug(appConfig.app.debug);
          system.log(appConfig);
-        
          app.setRoot('main/viewmodels/shell', 'entrance');});
     });
 });
