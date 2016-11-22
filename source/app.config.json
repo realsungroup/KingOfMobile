@@ -36,7 +36,7 @@
                 { "route": "setting","title":"设置", "moduleId": "main/viewmodels/setting", "nav": true ,"iconCls":"icon icon-settings","type":"root"}
                 
             ],
-        "myworkRouter": [{ "route": "","title":"mywork1","resid":"529086370280", "moduleId":"viewmodels/mywork1", "nav": true ,"iconCls":"icon icon-settings","type":"myworkpage","viewUrl":"mywork/views/myworkbaseview.html"},
+        "myworkRouter": [{ "route": "","title":"mywork1","resid":"533143158334", "moduleId":"viewmodels/mywork1", "nav": true ,"iconCls":"icon icon-settings","type":"myworkpage","viewUrl":"mywork/views/mywork1.html"},
          { "route": "mywork2","title":"mywork2","resid":"529072606462", "moduleId": "viewmodels/mywork2", "nav": true ,"iconCls":"icon icon-settings","type":"myworkpage"},
                     { "route": "mywork3","title":"mywork3","resid":"511283504833", "moduleId": "viewmodels/mywork3", "nav": true ,"iconCls":"icon icon-settings","type":"myworkpage"}]
     },
