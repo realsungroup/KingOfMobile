@@ -1,28 +1,13 @@
-<input class="appDate">
+
   <ons-list>
+    <ons-list-header>开始时间</ons-list-header>
+    <input class="form-control appDate" data-bind="text:  ">
+    <ons-list-header>结束时间</ons-list-header>
+    <input class="form-control appDate" data-bind="text:  ">
+    <ons-list-header>事由</ons-list-header>
+    <input class="form-control" data-bind="text:  ">
     <ons-list-header>微信Openid</ons-list-header>
     <ons-list-item tappable data-bind="text: appConfig.appfunction.system.getWeixinOpenid()"> </ons-list-item>
     <ons-list-header>记录数</ons-list-header>
     <ons-list-item data-bind="text:  total().toString()  " >   </ons-list-item>
   </ons-list>
-  <script>
-                    $(function() {
-                        var currYear = (new Date()).getFullYear();
-                        var opt = {};
-                        opt.date = { preset: 'date' };
-                        opt.datetime = { preset: 'datetime' };
-                        opt.time = { preset: 'time' };
-                        opt.default = {
-                            theme: 'android-ics light', //皮肤样式
-                            display: 'modal', //显示方式
-                            mode: 'scroller', //日期选择模式
-                            dateFormat: 'yyyy-mm-dd',
-                            lang: 'zh',
-                            showNow: true,
-                            nowText: "今天",
-                            startYear: currYear - 100, //开始年份
-                            endYear: currYear + 5 //结束年份
-                        };
-                        $(".appDate").mobiscroll($.extend(opt['date'], opt['default']));
-                    })
-</script>
