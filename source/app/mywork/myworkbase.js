@@ -13,7 +13,7 @@ define(['durandal/app','knockout','plugins/router','plugins/dialog','mywork/mywo
                         self.lastError("");
 
                         console.log(self.rows(data));
-                        console.log(result);
+                        console.log(data);
                         console.log(total);
                         
                         
@@ -105,25 +105,26 @@ define(['durandal/app','knockout','plugins/router','plugins/dialog','mywork/mywo
                     if ( appConfig.app.dbs!==null)
                     {
                         self.pageIndexChanged(self.pageIndex);
-                            $(function() {
-                                var currYear = (new Date()).getFullYear();
-                                var opt = {};
-                                opt.date = { preset: 'date' };
-                                opt.datetime = { preset: 'datetime' };
-                                opt.time = { preset: 'time' };
-                                opt.default = {
-                                    theme: 'android-ics light', //皮肤样式
-                                    display: 'modal', //显示方式
-                                    mode: 'scroller', //日期选择模式
-                                    dateFormat: 'yyyy-mm-dd',
-                                    lang: 'zh',
-                                    showNow: true,
-                                    nowText: "今天",
-                                    startYear: currYear - 100, //开始年份
-                                    endYear: currYear + 5 //结束年份
-                                };
-                                $(".appDate").mobiscroll($.extend(opt['date'], opt['default']));
-                            })
+                        $(function() {
+                            var currYear = (new Date()).getFullYear();
+                            var opt = {};
+                            // opt.date = { preset: 'date' };
+                            opt.datetime = { preset: 'datetime' };
+                            // opt.time = { preset: 'time' };
+                            opt.default = {
+                                theme: 'sense-ui', //皮肤样式
+                                display: 'bottom', //显示方式
+                                mode: 'scroller', //日期选择模式
+                                dateFormat: 'yyyy-mm-dd',
+                                preset: 'datetime',
+                                lang: 'zh',
+                                showNow: true,
+                                nowText: "今天",
+                                startYear: currYear, //开始年份
+                                endYear: currYear + 2, //结束年份
+                            };
+                            $(".appDate").mobiscroll($.extend(opt['date'], opt['default']));
+                        })
                     }  
                   if (self._attached!==undefined){
                       if (self._attached){
@@ -153,7 +154,7 @@ define(['durandal/app','knockout','plugins/router','plugins/dialog','mywork/mywo
                      var self=this;
                      return Math.ceil(ko.utils.unwrapObservable(self.total) / self.pageSize) - 1;
                 }, self);},
-                pageIndex:1,
+                pageIndex:0,
                 pageIndexChanged:function(index){   
                    var self=this;
                    self.pageIndex=index;
