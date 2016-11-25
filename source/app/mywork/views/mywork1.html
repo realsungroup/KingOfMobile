@@ -1,16 +1,24 @@
 
-  <ons-list>
-    <ons-list-header>开始时间</ons-list-header>
-    <input class="form-control appDate" data-bind="text:  ">
-    <!--data[0].C3_533143179815-->
-    <ons-list-header>结束时间</ons-list-header>
-    <input class="form-control appDate" data-bind="text:  ">
-    <!--data[0].C3_533143217561-->
-    <ons-list-header>事由</ons-list-header>
-    <input class="form-control" data-bind="text:  ">
-    <!--data[0].C3_533143291117-->
-    <ons-list-header>微信Openid</ons-list-header>
-    <ons-list-item tappable data-bind="text: appConfig.appfunction.system.getWeixinOpenid()"> </ons-list-item>
-    <ons-list-header>记录数</ons-list-header>
-    <ons-list-item data-bind="text:  total  " >   </ons-list-item>
+  <ons-list data-bind='foreach:rows' >
+    
+    <ons-list-item tappable="true" class="list__item">
+      <div class="left list__item__left">
+        <div data-bind='attr:{class:C3_533402468773}'>
+        <i data-bind='attr:{class:C3_533407368877}'></i></div>
+      </div>
+      <div class="center list__item__center">
+        <div class="list__item__title"><span data-bind='text:C3_533398158705'>病假</span></div>
+        <div class="list__item__subtitle"><span data-bind='text:C3_533143217561'>2016-01-01 12:00</span></div>
+      </div>
+      <div class="right list__item__right" style="font-size: 20px; color: rgb(202, 202, 202);">
+        <div><ons-icon    icon="ion-edit" style="margin: 0px 25px 0px 0px;"></ons-icon>
+        </div>
+        <div><ons-icon     icon="trash" style="margin: 0px 10px 0px 0px;"></ons-icon></div>
+        </div>
+    </ons-list-item>
+        
   </ons-list>
+   
+  <ons-fab>
+      <ons-icon icon="md-plus"></ons-icon>
+  </ons-fab>

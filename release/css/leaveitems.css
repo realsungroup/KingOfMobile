@@ -1,0 +1,31 @@
+.sick{
+color: rgb(255, 255, 255);
+ text-align: center;
+  width: 30px;
+   height: 30px; 
+   line-height: 30px; 
+   border-radius: 6px; 
+   font-size: 14px; 
+   background-color: rgb(148, 168, 189)
+}
+.leave{
+color: rgb(255, 255, 255);
+ text-align: center;
+  width: 30px;
+   height: 30px; 
+   line-height: 30px; 
+   border-radius: 6px; 
+   font-size: 14px; 
+   background-color: rgb(13, 168, 189)
+}
+.state-denied
+{
+color: rgb(255, 255, 255);
+ text-align: center;
+  width: 10px;
+   height: 10px; 
+   line-height: 30px; 
+   border-radius: 6px; 
+   font-size: 14px; 
+   background-color: rgb(13, 13, 189)
+}

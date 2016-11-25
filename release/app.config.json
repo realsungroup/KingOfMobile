@@ -29,16 +29,16 @@
         "defaultuserlanguage":"cn",
         "userConfig":null,
         "userProfile":null,
-        "curRouterHash":"#mywork",
+        "curRouterHash":"mywork",
         "mainRouter":[
                 { "route": "", "title":"首页", "moduleId": "main/viewmodels/welcome", "nav": true,"iconCls":"icon icon-home" ,"type":"root"},
                 { "route": "mywork*detail","title":"我的工作", "moduleId": "mywork/myworkshell", "nav": true ,"iconCls":"icon icon-me","type":"root"},
                 { "route": "setting","title":"设置", "moduleId": "main/viewmodels/setting", "nav": true ,"iconCls":"icon icon-settings","type":"root"}
                 
             ],
-        "myworkRouter": [{ "route": "","title":"mywork1","resid":"533143158334", "moduleId":"viewmodels/mywork1", "nav": true ,"iconCls":"icon icon-settings","type":"myworkpage","viewUrl":"mywork/views/mywork1.html"},
-         { "route": "mywork2","title":"mywork2","resid":"529072606462", "moduleId": "viewmodels/mywork2", "nav": true ,"iconCls":"icon icon-settings","type":"myworkpage"},
-                    { "route": "mywork3","title":"mywork3","resid":"511283504833", "moduleId": "viewmodels/mywork3", "nav": true ,"iconCls":"icon icon-settings","type":"myworkpage"}]
+        "myworkRouter": [{ "route": "","title":"请假申请","resid":"533143158334", "moduleId":"viewmodels/mywork1", "nav": true ,"iconCls":"icon icon-settings","type":"myworkpage","viewUrl":"mywork/views/mywork1.html"},
+         { "route": "mywork2","title":"mywork2","resid":"529072606462", "moduleId": "viewmodels/mywork2", "nav": true ,"iconCls":"icon icon-settings","type":"myworkpage","viewUrl":"mywork/views/mywork2.html"},
+                    { "route": "mywork3","title":"mywork3","resid":"511283504833", "moduleId": "viewmodels/mywork3", "nav": true ,"iconCls":"icon icon-settings","type":"myworkpage","viewUrl":"mywork/views/mywork3.html"}]
     },
     "kingofdinner":
     {

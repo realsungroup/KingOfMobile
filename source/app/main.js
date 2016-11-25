@@ -8,9 +8,9 @@
         'bootstrap': '../lib/bootstrap/js/bootstrap',
         'jquery': '../lib/jquery/jquery-1.9.1',
         'realsun': '../lib/realsun/js',
-        'sui':'//g.alicdn.com/msui/sm/0.6.2/js/sm',
         'myworkshell':'mywork/',
-        'myworkbase':'mywork/'
+        'myworkbase':'mywork/',
+        'mobiscroll':'../lib/mobiscorll/mobiscroll.2.13.2'
     },
     shim: {
         'bootstrap': {

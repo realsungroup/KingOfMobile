@@ -2506,7 +2506,7 @@
             endYear: date.getFullYear() + 1, 
             showNow: false,
             stepHour: 1,
-            stepMinute: 1,
+            stepMinute: 10,
             stepSecond: 1,
             separator: ' ',
             // Localization

@@ -3,8 +3,8 @@ define(['durandal/app','knockout','plugins/router','plugins/dialog','mywork/mywo
        var works3={
                id:122
        };
-       works3=jquery.extend(works3,myworkbase);
-         system.log("works3");
-       system.log(works3);
+      //  works3=jquery.extend(works3,myworkbase);
+      //    system.log("works3");
+      //  system.log(works3);
        return works3;
 }); 
