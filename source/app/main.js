@@ -20,7 +20,7 @@
     }
 });
 
-define(['durandal/system', 'durandal/app', 'durandal/viewLocator', 'bootstrap','realsun/common'],  function (system, app, viewLocator) {
+define(['durandal/system', 'knockout','durandal/app', 'durandal/viewLocator', 'bootstrap','realsun/common'],  function (system,ko, app, viewLocator) {
   
     app.title = '新同事';
     app.configurePlugins({
@@ -34,6 +34,7 @@ define(['durandal/system', 'durandal/app', 'durandal/viewLocator', 'bootstrap','
          appConfig.appfunction=appfunctions; 
          system.debug(appConfig.app.debug);
          system.log(appConfig);
+         appConfig.app.ko=ko;
          app.setRoot('main/viewmodels/shell', 'entrance');});
     });
 });

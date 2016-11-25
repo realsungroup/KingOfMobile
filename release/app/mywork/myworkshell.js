@@ -5,8 +5,7 @@ define(['durandal/app','knockout','plugins/router','plugins/dialog',], function 
             moduleId:'myworkshell',
             fromParent:true
         }).map(appConfig.app.myworkRouter).buildNavigationModel();
- 
-       return  {
+       appConfig.app.myworkshell=   {
                activate:function () {
                          
                           
@@ -37,5 +36,6 @@ define(['durandal/app','knockout','plugins/router','plugins/dialog',], function 
                     });
         })
               
-        };
+        }; 
+       return   appConfig.app.myworkshell;
 }); 

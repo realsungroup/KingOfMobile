@@ -1,7 +1,6 @@
 define(['durandal/app','knockout','plugins/router','plugins/dialog','mywork/myworkshell','durandal/system'], function (app,ko,router,dialog,myworkshell,system) {
    // Use the settings object to change the theme
-       fetchPage=function(self)
-        {
+        fetchPage=function(self){
 
                 
                 fetchrows(system,self,self.pageSize,self.pageIndex,function(result,data,total){
@@ -31,7 +30,7 @@ define(['durandal/app','knockout','plugins/router','plugins/dialog','mywork/mywo
                     }
                    
                 );
-        }
+          }
         fetchrows= function (system,self,pageSize,pageIndex,callback) {
                 
                 var resid=self.myrouter.resid;
@@ -58,9 +57,10 @@ define(['durandal/app','knockout','plugins/router','plugins/dialog','mywork/mywo
                 }
         
         };
-       return  {
-                myrouter:null,
-                activate:function () {
+        var workbase= function(){};
+        
+           workbase.prototype.myrouter=null;
+           workbase.prototype.activate=function () {
                        
                          var self=this;
                          var openid="";
@@ -98,51 +98,51 @@ define(['durandal/app','knockout','plugins/router','plugins/dialog','mywork/mywo
                                 self._activate();}
                             }
 
-                },
-                attached:function () {  
-                    
-                     var self=this;
+                };
+           workbase.prototype.attached=function () {  
+                
+                 var self=this;
+                  
+                
+              if (self._attached!==undefined){
+                  if (self._attached){
+                    self._attached();}
+                }
+               
+            };
+           workbase.prototype.compositionComplete=function(){ 
+              var self=this;
+                if ( appConfig.app.dbs!==null)
+                  {
+                      self.pageIndexChanged(self.pageIndex);
                       
-                    if ( appConfig.app.dbs!==null)
-                    {
-                        self.pageIndexChanged(self.pageIndex);
-                        
-                    }  
-                  if (self._attached!==undefined){
-                      if (self._attached){
-                        self._attached();}
-                    }
-                   
-                },
-                compositionComplete:function(){ 
-                         
-                 if (self._compositionComplete!==undefined){
-                      if (self._compositionComplete){
-                        self._compositionComplete();}
-                    }
-                },
-                setModuleid:function(moduleid)
-                {
-                        var self=this;
-                        self.__moduleId__='mywork/viewmodels/'+moduleid;
-                },
-                rows: ko.observableArray([]),
-                pageSize:appConfig.app.defaultpagesize,
-                key:ko.observable(""),
-                cmswhere:ko.observable(""),
-                lastError:ko.observable(""),
-                total:ko.observable(0),
-                maxPageIndex: function(){ return ko.pureComputed(function() {
-                     var self=this;
-                     return Math.ceil(ko.utils.unwrapObservable(self.total) / self.pageSize) - 1;
-                }, self);},
-                pageIndex:0,
-                pageIndexChanged:function(index){   
-                   var self=this;
-                   self.pageIndex=index;
-                   fetchPage(self);      
-                },
-
-              
-        };
+                  }         
+               if (self._compositionComplete!==undefined){
+                    if (self._compositionComplete){
+                      self._compositionComplete();}
+                  }
+              };
+              workbase.prototype.setModuleid=function(moduleid)
+              {
+                      var self=this;
+                      self.__moduleId__='mywork/viewmodels/'+moduleid;
+              };
+           workbase.prototype.rows=ko.observableArray([]);
+           workbase.prototype.pageSize=appConfig.app.defaultpagesize;
+           workbase.prototype.key=ko.observable("");
+           workbase.prototype.cmswhere=ko.observable("");
+           workbase.prototype.lastError=ko.observable("");
+           workbase.prototype.total=ko.observable(0);
+           workbase.prototype.maxPageIndex=function(){ return ko.pureComputed(function() {
+               var self=this;
+               return Math.ceil(ko.utils.unwrapObservable(self.total) / self.pageSize) - 1;
+          }, self);};
+          workbase.prototype.pageIndex=0;
+          workbase.prototype.pageIndexChanged=function(index){   
+             var self=this;
+             self.pageIndex=index;
+             fetchPage(self);      
+          }  
+  
+       return   new workbase();
 }); 

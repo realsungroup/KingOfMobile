@@ -1,5 +1,7 @@
 {
     "app": {
+        "ko":null,
+        "myworkshell":null,
         "loginUrl":"http://www.realsun.me:8081/rispweb/rispservice/apiSvrLogin.aspx?",
         "baseUrl": "http://www.realsun.me:8081/rispweb/risphost/data/AjaxService.aspx?uiver=200&dynlogin=1",
         "localbaseUrl": "",

@@ -1,9 +1,14 @@
-define(['durandal/app','knockout','plugins/router','plugins/dialog','mywork/myworkbase','jquery','durandal/system','mobiscroll'], 
-    function (app,ko,router,dialog,myworkbase,jquery,system,mobiscroll) {
-   // Use the settings object to change the theme
-       var works1={}
-        works1=jquery.extend(true,{},myworkbase);
-      
+define(['durandal/app','knockout','plugins/router','plugins/dialog','jquery','durandal/system','mobiscroll'], 
+    function (app,ko,router,dialog,jquery,system,mobiscroll) {
+       var works1=  {};
+       var workfields=new workbaseFields();
+       var workprocess=new workbase();
+       works1=jquery.extend(works1,workfields);
+       works1=jquery.extend(true,works1,workprocess);
+        works1._activate=function(){
+           
+            
+        }
         works1._attached=function(){
             
         };
@@ -11,7 +16,8 @@ define(['durandal/app','knockout','plugins/router','plugins/dialog','mywork/mywo
             //绑定编辑按钮
            
         }
-       return works1; 
+       
+       return  works1 ;
 }); 
 // $(function() {
                         //     var currYear = (new Date()).getFullYear();
