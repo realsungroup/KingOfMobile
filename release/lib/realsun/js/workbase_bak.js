@@ -1,9 +1,23 @@
-define(['durandal/app','knockout','plugins/router','plugins/dialog','mywork/myworkshell','durandal/system'], function (app,ko,router,dialog,myworkshell,system) {
-   // Use the settings object to change the theme
-        fetchPage=function(self){
+  var workbaseFields=(function(){
+            function workbaseFields()
+            {
+                this.rows=appConfig.app.ko.observableArray([]);
+                this.key=appConfig.app.ko.observable("");
+                this.cmswhere=appConfig.app.ko.observable("");
+                this.lastError=appConfig.app.ko.observable("");
+                this.total=appConfig.app.ko.observable(0);
+                this.maxPageIndex=function(){ return appConfig.app.ko.pureComputed(function() {
+                    var self=this;
+                    return Math.ceil(appConfig.app.ko.utils.unwrapObservable(self.total) / self.pageSize) - 2;
+                }, self);};
+             
+            }
+            return   workbaseFields;
+        }());
+ fetchPage=function(self){
 
                 
-                fetchrows(system,self,self.pageSize,self.pageIndex,function(result,data,total){
+                fetchrows(self,self.pageSize,self.pageIndex,function(result,data,total){
                     if (result)
                     { 
                             
@@ -31,7 +45,7 @@ define(['durandal/app','knockout','plugins/router','plugins/dialog','mywork/mywo
                    
                 );
           }
-        fetchrows= function (system,self,pageSize,pageIndex,callback) {
+        fetchrows= function (self,pageSize,pageIndex,callback) {
                 
                 var resid=self.myrouter.resid;
                 
@@ -57,23 +71,30 @@ define(['durandal/app','knockout','plugins/router','plugins/dialog','mywork/mywo
                 }
         
         };
-        var workbase= function(){};
-        
+       
+        var workbase= workbase || function(){};
+           
            workbase.prototype.myrouter=null;
            workbase.prototype.activate=function () {
                        
                          var self=this;
                          var openid="";
+                         var self=this;
+                         var myworkshell=appConfig.app.myworkshell;
                          self.myrouter=myworkshell.getCurroute(self);
                          appConfig.app.curRouterHash=self.myrouter.hash;
                          myworkshell.setSubtitle(self.myrouter.title);
+                          if (self._activate!==undefined){
+                            if (self._activate){
+                                self._activate();}
+                            }
                          if (appConfig.app.runmode=="weixin"){
                             openid=appConfig.appfunction.system.getWeixinOpenid();
                             //weixin 登入  
                             if (openid==""||openid==null)
                                 {
-                                    
-                                    router.navigate(appConfig.app.weixinOAuthUrl+"?hash="+appConfig.app.curRouterHash.replace("#",""));
+                                    window.location=appConfig.app.weixinOAuthUrl+"?hash="+appConfig.app.curRouterHash.replace("#","");
+                                   // router.navigate(appConfig.app.weixinOAuthUrl+"?hash="+appConfig.app.curRouterHash.replace("#",""));
                                     return ;
                                 }
                                 else
@@ -91,12 +112,9 @@ define(['durandal/app','knockout','plugins/router','plugins/dialog','mywork/mywo
                         }
                         else{
                             //跳转首页登入
-                         router.navigate('/#')}
+                          window.location='/#'}
                         
-                        if (self._activate!==undefined){
-                            if (self._activate){
-                                self._activate();}
-                            }
+                      
 
                 };
            workbase.prototype.attached=function () {  
@@ -127,16 +145,9 @@ define(['durandal/app','knockout','plugins/router','plugins/dialog','mywork/mywo
                       var self=this;
                       self.__moduleId__='mywork/viewmodels/'+moduleid;
               };
-           workbase.prototype.rows=ko.observableArray([]);
+         
            workbase.prototype.pageSize=appConfig.app.defaultpagesize;
-           workbase.prototype.key=ko.observable("");
-           workbase.prototype.cmswhere=ko.observable("");
-           workbase.prototype.lastError=ko.observable("");
-           workbase.prototype.total=ko.observable(0);
-           workbase.prototype.maxPageIndex=function(){ return ko.pureComputed(function() {
-               var self=this;
-               return Math.ceil(ko.utils.unwrapObservable(self.total) / self.pageSize) - 1;
-          }, self);};
+           
           workbase.prototype.pageIndex=0;
           workbase.prototype.pageIndexChanged=function(index){   
              var self=this;
@@ -144,5 +155,3 @@ define(['durandal/app','knockout','plugins/router','plugins/dialog','mywork/mywo
              fetchPage(self);      
           }  
   
-       return   new workbase();
-}); 

@@ -1,5 +1,6 @@
-  var workbaseFields=(function(){
-            function workbaseFields()
+ 
+  var workbase=(function(){
+            function workbase()
             {
                 this.rows=appConfig.app.ko.observableArray([]);
                 this.key=appConfig.app.ko.observable("");
@@ -10,11 +11,83 @@
                     var self=this;
                     return Math.ceil(appConfig.app.ko.utils.unwrapObservable(self.total) / self.pageSize) - 2;
                 }, self);};
+                this.myrouter=null;
+                this._activate=function () {
+                       
+                         var self=this;
+                         var openid="";
+                         var self=this;
+                         var myworkshell=appConfig.app.myworkshell;
+                         self.myrouter=myworkshell.getCurroute(self);
+                         appConfig.app.curRouterHash=self.myrouter.hash;
+                         myworkshell.setSubtitle(self.myrouter.title);
+                         
+                         if (appConfig.app.runmode=="weixin"){
+                            openid=appConfig.appfunction.system.getWeixinOpenid();
+                            //weixin 登入  
+                            if (openid==""||openid==null)
+                                {
+                                    window.location=appConfig.app.weixinOAuthUrl+"?hash="+appConfig.app.curRouterHash.replace("#","");
+                                   // router.navigate(appConfig.app.weixinOAuthUrl+"?hash="+appConfig.app.curRouterHash.replace("#",""));
+                                    return ;
+                                }
+                                else
+                                {
+                                   
+
+                                }
+
+                         }
+                        if ( appConfig.app.dbs!==null)
+                        {
+                        
+                            self.pageIndexChanged(self.pageIndex);
+                            
+                        }
+                        else{
+                            //跳转首页登入
+                          window.location='/#'}
+                        
+                      
+
+                };
+           this._attached=function () {  
+                
+                 var self=this;
+                  
+                
+          
+               
+            };
+           this._compositionComplete=function(){ 
+              var self=this;
+                if ( appConfig.app.dbs!==null)
+                  {
+                      self.pageIndexChanged(self.pageIndex);
+                      
+                  }         
+               
+              };
+              this.setModuleid=function(moduleid)
+              {
+                      var self=this;
+                      self.__moduleId__='mywork/viewmodels/'+moduleid;
+              };
+         
+           this.pageSize=appConfig.app.defaultpagesize;
+           
+          this.pageIndex=0;
+          this.pageIndexChanged=function(index){   
+             var self=this;
+             self.pageIndex=index;
+             fetchPage(self);      
+          }  
+  
              
             }
-            return   workbaseFields;
+            return   workbase;
         }());
- fetchPage=function(self){
+  fetchPage=function(self){
 
                 
                 fetchrows(self,self.pageSize,self.pageIndex,function(result,data,total){
@@ -71,87 +144,14 @@
                 }
         
         };
+ var myworkbase=(function (_super) {
+            __extends(myworkbase, _super);
+            function myworkbase() {
+                _super.apply(this, arguments);
+            }
+                return myworkbase;
+            }(workbase));
        
-        var workbase= workbase || function(){};
+ 
            
-           workbase.prototype.myrouter=null;
-           workbase.prototype.activate=function () {
-                       
-                         var self=this;
-                         var openid="";
-                         var self=this;
-                         var myworkshell=appConfig.app.myworkshell;
-                         self.myrouter=myworkshell.getCurroute(self);
-                         appConfig.app.curRouterHash=self.myrouter.hash;
-                         myworkshell.setSubtitle(self.myrouter.title);
-                          if (self._activate!==undefined){
-                            if (self._activate){
-                                self._activate();}
-                            }
-                         if (appConfig.app.runmode=="weixin"){
-                            openid=appConfig.appfunction.system.getWeixinOpenid();
-                            //weixin 登入  
-                            if (openid==""||openid==null)
-                                {
-                                    window.location=appConfig.app.weixinOAuthUrl+"?hash="+appConfig.app.curRouterHash.replace("#","");
-                                   // router.navigate(appConfig.app.weixinOAuthUrl+"?hash="+appConfig.app.curRouterHash.replace("#",""));
-                                    return ;
-                                }
-                                else
-                                {
-                                   
-
-                                }
-
-                         }
-                        if ( appConfig.app.dbs!==null)
-                        {
-                        
-                            self.pageIndexChanged(self.pageIndex);
-                            
-                        }
-                        else{
-                            //跳转首页登入
-                          window.location='/#'}
-                        
-                      
-
-                };
-           workbase.prototype.attached=function () {  
-                
-                 var self=this;
-                  
-                
-              if (self._attached!==undefined){
-                  if (self._attached){
-                    self._attached();}
-                }
-               
-            };
-           workbase.prototype.compositionComplete=function(){ 
-              var self=this;
-                if ( appConfig.app.dbs!==null)
-                  {
-                      self.pageIndexChanged(self.pageIndex);
-                      
-                  }         
-               if (self._compositionComplete!==undefined){
-                    if (self._compositionComplete){
-                      self._compositionComplete();}
-                  }
-              };
-              workbase.prototype.setModuleid=function(moduleid)
-              {
-                      var self=this;
-                      self.__moduleId__='mywork/viewmodels/'+moduleid;
-              };
          
-           workbase.prototype.pageSize=appConfig.app.defaultpagesize;
-           
-          workbase.prototype.pageIndex=0;
-          workbase.prototype.pageIndexChanged=function(index){   
-             var self=this;
-             self.pageIndex=index;
-             fetchPage(self);      
-          }  
-  

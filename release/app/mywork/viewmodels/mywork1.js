@@ -1,23 +1,26 @@
 define(['durandal/app','knockout','plugins/router','plugins/dialog','jquery','durandal/system','mobiscroll'], 
     function (app,ko,router,dialog,jquery,system,mobiscroll) {
-       var works1=  {};
-       var workfields=new workbaseFields();
-       var workprocess=new workbase();
-       works1=jquery.extend(works1,workfields);
-       works1=jquery.extend(true,works1,workprocess);
-        works1._activate=function(){
-           
-            
-        }
-        works1._attached=function(){
-            
-        };
-        works1._compositionComplete=function(){
-            //绑定编辑按钮
-           
-        }
-       
-       return  works1 ;
+      
+       var work=new myworkbase();
+       work.activate=function(){
+           work._activate();
+       }
+       work.compositionComplete=function(){
+           work._compositionComplete
+       }
+       work.edit=function(){
+           dialog.showMessage('edit',"新同事");
+       }
+       work.del=function(){
+           dialog.showMessage('del',"新同事");
+       }
+       work.browse=function(){
+           dialog.showMessage('browse',"新同事");
+       }
+       work.add=function(){
+           dialog.showMessage('add',"新同事");
+       }
+       return work;
 }); 
 // $(function() {
                         //     var currYear = (new Date()).getFullYear();
