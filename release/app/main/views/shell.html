@@ -1,10 +1,10 @@
 
 <nav class="bar bar-nav navbar navbar-default" role="navigation">
-    <!--<a class="button button-link button-nav pull-left" href="javascript:history.go(-1);" data-transition='slide-out'>
+    <a data-bind='visible:appConfig.app.showback' class="button button-link button-nav pull-left" href="javascript:history.go(-1);" data-transition='slide-out'>
       <span class="icon icon-left"></span>
       返回
-    </a>-->
-      <h1 class="title" data-bind="text:router.activeInstruction().config.title"></h1>
+    </a>
+      <h1 class="title" data-bind="text:appConfig.app.subtitle"></h1>
 	    <!--<div class="container-fluid" data-bind="visible:router.activeInstruction().config.title=='我的工作'" > </div>-->
 </nav>
 

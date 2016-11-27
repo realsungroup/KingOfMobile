@@ -1,26 +1,37 @@
-define(['durandal/app','knockout','plugins/router','plugins/dialog','jquery','durandal/system','mobiscroll'], 
-    function (app,ko,router,dialog,jquery,system,mobiscroll) {
+define(['durandal/app','knockout','plugins/router','plugins/dialog','jquery'], 
+    function (app,ko,router,dialog,jquery,editform) {
       
        var work=new myworkbase();
        work.activate=function(){
            work._activate();
-       }
+           appConfig.app.subtitle(this.myrouter.title);
+       };
        work.compositionComplete=function(){
-           work._compositionComplete
-       }
-       work.edit=function(){
-           dialog.showMessage('edit',"新同事");
+           work._compositionComplete();
+           appConfig.app.subtitle(this.myrouter.title);
+       };
+       work.binding= function () {
+            
+            return { cacheViews:false }; //cancels view caching for this module, allowing the triggering of the detached callback
+        };
+        work.bindingComplete= function () {
+          
+        };
+       work.edit=function(row){
+          // dialog.showMessage('edit',"新同事");
+           router.navigate("#editform/"+row.REC_RESID+"/record/"+row.REC_ID+"/data/"+JSON.stringify(row)+"/action/edit");
        }
        work.del=function(){
-           dialog.showMessage('del',"新同事");
+          // dialog.showMessage('del',"新同事");
        }
        work.browse=function(){
-           dialog.showMessage('browse',"新同事");
+         //  dialog.showMessage('browse',"新同事");
        }
        work.add=function(){
-           dialog.showMessage('add',"新同事");
-       }
-       return work;
+          // dialog.showMessage('add',"新同事");
+  
+     }
+    return work;
 }); 
 // $(function() {
                         //     var currYear = (new Date()).getFullYear();

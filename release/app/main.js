@@ -10,7 +10,9 @@ requirejs.config({
         'realsun': '../lib/realsun/js',
         'myworkshell':'mywork/',
         'myworkbase':'mywork/',
-        'mobiscroll':'../lib/mobiscorll/mobiscroll.2.13.2'
+        'mobiscroll':'../lib/mobiscorll/mobiscroll.2.13.2',
+        'editbase':'host/editbase'
+        
     },
     shim: {
         'bootstrap': {
@@ -35,6 +37,8 @@ define(['durandal/system', 'knockout','durandal/app', 'durandal/viewLocator', 'b
          system.debug(appConfig.app.debug);
          system.log(appConfig);
          appConfig.app.ko=ko;
+         appConfig.app.subtitle=ko.observable("");
+         appConfig.app.showback=ko.observable(false);
          app.setRoot('main/viewmodels/shell', 'entrance');});
     });
 });

@@ -21,7 +21,7 @@
                          self.myrouter=myworkshell.getCurroute(self);
                          appConfig.app.curRouterHash=self.myrouter.hash;
                          myworkshell.setSubtitle(self.myrouter.title);
-                         
+                      
                          if (appConfig.app.runmode=="weixin"){
                             openid=appConfig.appfunction.system.getWeixinOpenid();
                             //weixin 登入  

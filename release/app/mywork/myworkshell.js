@@ -13,6 +13,7 @@ define(['durandal/app','knockout','plugins/router','plugins/dialog',], function 
                },
                 router: childRouter,  
                 attached:function(){
+                   
                 },
                 getCurroute:function(that){
                     var strmoduleid=that.__moduleId__;

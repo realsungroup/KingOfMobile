@@ -6,6 +6,7 @@ define(['durandal/app','knockout','plugins/router','plugins/dialog','jquery','du
        work.activate=function(){
           
            work._activate();
+            appConfig.app.subtitle(this.myrouter.title);
        }
        return work ;
 }); 
