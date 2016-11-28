@@ -12,6 +12,7 @@
         "uploadFileUrl":"http://www.realsun.me:8081/rispweb/rispservice/SvcUploadFile2.aspx",
         "httppath":"http://www.realsun.me:8081/rispweb/upfiles",
         "saveMethod":"SaveData_Ajax",
+        "GetCmsColumnsMethod":"GetCmsColumns_Ajax",
         "getBysqlMethod":"Ajax_QueryBySql",
         "debug":true,
         "weixindebug":false,
@@ -38,7 +39,7 @@
                 { "route": "", "title":"首页", "moduleId": "main/viewmodels/welcome", "nav": true,"iconCls":"icon icon-home" ,"type":"root"},
                 { "route": "mywork*detail","title":"我的工作", "moduleId": "mywork/myworkshell", "nav": true ,"iconCls":"icon icon-me","type":"root"},
                 { "route": "setting","title":"设置", "moduleId": "main/viewmodels/setting", "nav": true ,"iconCls":"icon icon-settings","type":"root"},
-                { "route": "editform/:resid/record/:recid/data/:json/action/:name","title":"editform", "moduleId": "editforms/viewmodels/editform", "nav": false ,"iconCls":"icon icon-settings","type":"root"}]
+                { "route": "editform/:resid/record/:recid/data/:json/action/:name","title":"请假申请", "moduleId": "editforms/viewmodels/editform", "nav": false ,"iconCls":"icon icon-settings","type":"root"}]
                 
             ,
         "myworkRouter": [{ "route": "","title":"请假申请","resid":"533143158334", "moduleId":"viewmodels/mywork1", "nav": true ,"iconCls":"icon icon-settings","type":"myworkpage","viewUrl":"mywork/views/mywork1.html"},

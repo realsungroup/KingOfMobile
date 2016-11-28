@@ -12,6 +12,29 @@
                     return Math.ceil(appConfig.app.ko.utils.unwrapObservable(self.total) / self.pageSize) - 2;
                 }, self);};
                 this.myrouter=null;
+                this.emptyrow=function(dfd){
+                    var that=this;
+                    appConfig.app.dbs.dbGetCmsColumns(this.myrouter.resid, fnSuccess, fnError, fnSyserror,dfd);
+                    function fnSuccess(data,total,dfd)
+                    {
+                        var row={}
+                        for (x in data)
+                        {eval('row.'+data[x].id+'=null');}
+                        row.REC_RESID=that.myrouter.resid
+                        dfd.resolve(row);
+
+                    }
+                    function fnError(errordata,dfd)
+                    {
+                         dfd.reject(errordata);
+
+                    }
+                    function fnSyserror(jqXHR, textStatus, errorThrown,dfd)
+                    {
+                        var errordata={"error":-2,"message":textStatus};
+                         dfd.reject(errordata);
+                    }
+                }
                 this._activate=function () {
                        
                          var self=this;

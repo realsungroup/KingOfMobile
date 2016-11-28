@@ -351,11 +351,12 @@ var dbHelper = (function () {
         this.saveMethod = appConfig.app.saveMethod;
         this.getMethod = appConfig.app.getMethod;
         this.getBysqlMethod=appConfig.app.getBysqlMethod;
+        this.GetCmsColumnsMethod=appConfig.app.GetCmsColumnsMethod;
         this.baseUrl = baseurl;
         this.user = user;
         this.ucode = ucode;
     }
-    dbHelper.prototype.dbGetLittleDataBysql = function (resid, f3svc_sql, fnSuccess, fnError, fnSyserror)
+        dbHelper.prototype.dbGetLittleDataBysql = function (resid, f3svc_sql, fnSuccess, fnError, fnSyserror)
     {
         var url;
         url = this.baseUrl + "&method=" + this.getBysqlMethod + "&user=" + this.user + "&ucode=" + this.ucode + "&resid=" + resid  + "&f3svc_sql=" + f3svc_sql;
@@ -397,6 +398,52 @@ var dbHelper = (function () {
             error: function (jqXHR, textStatus, errorThrown) {
                 if (fnSyserror != null) {
                     fnSyserror(jqXHR, textStatus, errorThrown);
+                }
+            } });
+
+    }
+    dbHelper.prototype.dbGetCmsColumns = function (resid, fnSuccess, fnError, fnSyserror,dfd)
+    {
+        var url;
+        url = this.baseUrl + "&method=" +this.GetCmsColumnsMethod + "&user=" + this.user + "&ucode=" + this.ucode + "&resid=" + resid;
+        $.ajax({
+            url: url,
+            dataType: "jsonp",
+            jsonp: "jsoncallback",
+            success: function (text) {
+                if (text !== "") {
+                    var data;
+                    if (typeof(text)=='object')
+                    {
+                        data =text;
+                    }
+                    else
+                    {
+                        data = JSON.parse(text);
+                    }
+                   
+                   
+                    if (data.error == -1) {
+                        if (fnError != null) {
+                            fnError(data,dfd);
+                        }
+                    }
+                    var adata = [];
+                   
+                    var total=0;
+                    adata = data.data;
+                    if (data.total)
+                    {  total = data.total;}
+                  
+                    if (fnSuccess != null) {
+
+                        fnSuccess(adata,total,dfd);
+                    }
+                }
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                if (fnSyserror != null) {
+                    fnSyserror(jqXHR, textStatus, errorThrown,dfd);
                 }
             } });
 
@@ -453,7 +500,7 @@ var dbHelper = (function () {
                 }
             } });
     };
-    dbHelper.prototype.doDbSavedata = function (resid, subresid, json, url,fnSuccess, fnError, fnSyserror) {
+    dbHelper.prototype.doDbSavedata = function (resid, subresid, json, url,fnSuccess, fnError, fnSyserror,dfd) {
          $.ajax({
             url: url,
             async: false,
@@ -465,32 +512,32 @@ var dbHelper = (function () {
             success: function (text) {
                 if (text.error == "0") {
                     if (fnSuccess != null) {
-                        fnSuccess(text);
+                        fnSuccess(text,dfd);
                     }
                 }
                 else {
                     if (fnError != null) {
-                        fnError(text);
+                        fnError(text,dfd);
                     }
                 }
             },
             error: function (jqXHR, textStatus, errorThrown) {
                 if (fnSyserror != null) {
-                    fnSyserror(jqXHR, textStatus, errorThrown);
+                    fnSyserror(jqXHR, textStatus, errorThrown,dfd);
                 }
             }
         });
 
     }
-    dbHelper.prototype.dbSavedata = function (resid, subresid, json, fnSuccess, fnError, fnSyserror) {
+    dbHelper.prototype.dbSavedata = function (resid, subresid, json, fnSuccess, fnError, fnSyserror,dfd) {
         var url;
         url = this.baseUrl + "&method=" + this.saveMethod + "&user=" + this.user + "&ucode=" + this.ucode;
-        dbHelper.prototype.doDbSavedata(resid, subresid, json, url,fnSuccess, fnError, fnSyserror);
+        dbHelper.prototype.doDbSavedata(resid, subresid, json, url,fnSuccess, fnError, fnSyserror,dfd);
     };
-    dbHelper.prototype.dbSavedataWithparm = function (resid, subresid, json,withoutdata,formulalayer,synchronizedat, fnSuccess, fnError, fnSyserror) {
+    dbHelper.prototype.dbSavedataWithparm = function (resid, subresid, json,withoutdata,formulalayer,synchronizedat, fnSuccess, fnError, fnSyserror,dfd) {
         var url;
         url = this.baseUrl + "&method=" + this.saveMethod + "&user=" + this.user + "&ucode=" + this.ucode+"&withoutdata="+withoutdata+"&formulalayer="+formulalayer+"&synchronizedat="+synchronizedat;
-        dbHelper.prototype.doDbSavedata(resid, subresid, json, url,fnSuccess, fnError, fnSyserror);
+        dbHelper.prototype.doDbSavedata(resid, subresid, json, url,fnSuccess, fnError, fnSyserror,dfd);
     };
     return dbHelper;
 }());

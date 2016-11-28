@@ -698,12 +698,13 @@
             if (!format || !value) {
                 return def;
             }
-
+            
+          
             // If already a date object
             if (value.getTime) {
                 return value;
             }
-
+            
             value = (typeof value == 'object' ? value.toString() : value + '');
 
             var shortYearCutoff = s.shortYearCutoff,
@@ -833,7 +834,11 @@
             if (s.getYear(date) != year || s.getMonth(date) + 1 != month || s.getDay(date) != day) {
                 return def; // Invalid date
             }
-
+           if (1==1)
+            {
+               // return new Date(value);
+            }
+             
             return date;
         }
     };
@@ -2388,6 +2393,7 @@
             var v = $elm.val() || '';
             that._hasValue = v !== '';
             that.temp = that.values ? that.values.slice(0) : s.parseValue(v, that);
+            //that.temp=v;
             setValue();
         };
 
