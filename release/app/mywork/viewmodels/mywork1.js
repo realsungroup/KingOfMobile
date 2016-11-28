@@ -4,12 +4,16 @@ define(['durandal/app','knockout','plugins/router','plugins/dialog','jquery','ed
        var work=new myworkbase();
        work.activate=function(){
            work._activate();
+           appConfig.app.formaddfn=this.add;
+          
            appConfig.app.subtitle(this.myrouter.title);
        };
        work.compositionComplete=function(){
+            appConfig.app.showaddbutton(true);
            work._compositionComplete();
            appConfig.app.subtitle(this.myrouter.title);
        };
+       work.detached=function(){ appConfig.app.showaddbutton(false);};
        work.binding= function () {
             
             return { cacheViews:false }; //cancels view caching for this module, allowing the triggering of the detached callback
@@ -60,6 +64,7 @@ define(['durandal/app','knockout','plugins/router','plugins/dialog','jquery','ed
        }
        work.add=function(){
           // dialog.showMessage('add',"新同事");
+            appConfig.app.showaddbutton(false);
            var promise=system.defer(function(dfd){
                     try {
                           work.emptyrow(dfd);

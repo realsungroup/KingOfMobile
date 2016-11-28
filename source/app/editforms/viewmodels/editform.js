@@ -46,6 +46,7 @@ define(['durandal/app','knockout','plugins/router','plugins/dialog','jquery','du
            },
            activate:function(resid,recid,json,action)
            {
+             
              this.action=action;
              switch (action) {
                  case 'edit':
@@ -102,7 +103,8 @@ define(['durandal/app','knockout','plugins/router','plugins/dialog','jquery','du
                         });
           },
           detached: function (view) {
-             appConfig.app.showback(false);
+              appConfig.app.showback(false);
+              
            }
 
        };
