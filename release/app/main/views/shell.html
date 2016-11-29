@@ -1,5 +1,4 @@
 
-
 <nav class="bar bar-tab" data-bind="foreach: rootRouter">
     
                <a class="tab-item"  data-bind="css: { active: isActive },attr: { href: hash }">
@@ -7,23 +6,10 @@
                  <span class="tab-label"  data-bind="text: title"></span>
                </a>
   </nav>
-    <nav class="bar bar-nav navbar navbar-default" role="navigation">
-    <a data-bind='visible:appConfig.app.showback' class="button button-link button-nav pull-left" href="javascript:history.go(-1);" data-transition='slide-out'>
-      <span class="icon icon-left"></span>
-      返回
-    </a>
-    <a data-bind='click:appConfig.app.formaddfn,visible:appConfig.app.showaddbutton' class="button button-add button-nav pull-left" data-transition='slide-out'>
-      <span class="icon icon-add"></span>
-       添加
-    </a>
-  </nav>
   <!--page-->
-<div class="page-host" data-bind="router: { transition:'entrance' }">
- 
-</div>
+<div class="page-host" data-bind="router: { transition:'entrance' }"></div>
  
 
- 
 
 
 

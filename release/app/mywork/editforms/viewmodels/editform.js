@@ -6,6 +6,7 @@ define(['durandal/app','knockout','plugins/router','plugins/dialog','jquery','du
            editservice:null,
            savebutton:false,
            action:'',
+           back:function(){router.navigateBack()},
            saveform:function(){
              if (this.action=='edit')
              { this.editservice.saveData(this.formdata()).then(function(e){
@@ -72,7 +73,7 @@ define(['durandal/app','knockout','plugins/router','plugins/dialog','jquery','du
                      break;
              }
               
-               appConfig.app.showback(true);
+           
                
            },
           attached:function (){
@@ -101,11 +102,7 @@ define(['durandal/app','knockout','plugins/router','plugins/dialog','jquery','du
                             };
                             $(".appDate").mobiscroll($.extend(opt['date'], opt['default']));
                         });
-          },
-          detached: function (view) {
-              appConfig.app.showback(false);
-              
-           }
+          }
 
        };
       

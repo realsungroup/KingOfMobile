@@ -1,7 +1,14 @@
 
-  <ons-list data-bind='foreach:rows' >
+   <a data-bind='click:$root.add' class="button button-add button-nav fab" data-transition='slide-out'>
+      <span class="icon icon-add"></span>
+       添加
+    </a>
+	<!--<ons-fab>
+      <ons-icon icon="md-plus" data-bind='click:$root.add'></ons-icon>
+  </ons-fab>-->
+  <ons-list data-bind='foreach:rows'  >
     
-    <ons-list-item  class="list__item"  > 
+    <ons-list-item  class="list__item"  tappable='true' chevron='true' > 
       <div class="left list__item__left" data-bind='click:$root.browse'>
         <div data-bind='attr:{class:C3_533402468773}'>
         <i data-bind='attr:{class:C3_533407368877}'></i></div>
