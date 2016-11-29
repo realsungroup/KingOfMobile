@@ -1,8 +1,15 @@
 
- <a data-bind="visible:editform.savebutton,click:back" class="button button-add button-nav fab" data-transition='slide-out'>
-      <span class="icon icon-add"></span>
-       返回
-</a>
+ 
+<ons-toolbar>
+   
+    <div class="left">
+      <ons-toolbar-button>
+       
+        <ons-icon data-bind="click:back" icon="ion-chevron-left"> 返回</ons-icon>
+         
+      </ons-toolbar-button>
+    </div>
+  </ons-toolbar>
 <ons-list-header>开始时间</ons-list-header>
 <input class="form-control appDate" data-bind="value:editform.formdata().C3_533143179815">
 

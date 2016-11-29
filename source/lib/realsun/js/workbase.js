@@ -12,9 +12,17 @@
                     return Math.ceil(appConfig.app.ko.utils.unwrapObservable(self.total) / self.pageSize) - 2;
                 }, self);};
                 this.myrouter=null;
+                this.getViewresid=function(){
+                    var that=this;
+                    return that.myrouter.resid;
+
+                }
+                this.getTitle=function(){
+                    return this.myrouter.title;
+                }
                 this.emptyrow=function(dfd){
                     var that=this;
-                    appConfig.app.dbs.dbGetCmsColumns(this.myrouter.resid, fnSuccess, fnError, fnSyserror,dfd);
+                    appConfig.app.dbs.dbGetCmsColumns(that.getViewresid(), fnSuccess, fnError, fnSyserror,dfd);
                     function fnSuccess(data,total,dfd)
                     {
                         var row={}
@@ -143,7 +151,7 @@
           }
         fetchrows= function (self,pageSize,pageIndex,callback) {
                 
-                var resid=self.myrouter.resid;
+                var resid=self.getViewresid();
                 
                 
                  appConfig.app.dbs.dbGetdata(resid,"",self.key(),self.cmswhere(),dataGot,fnerror,fnhttperror,pageSize,pageIndex);

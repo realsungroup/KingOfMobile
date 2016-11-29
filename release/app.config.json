@@ -45,8 +45,8 @@
                
                 
             ,
-        "myworkRouter": [{ "route": ["","mywork1/:action/resid/:resid/recid/:recid"],"title":"请假申请","resid":"533143158334","hash":"#mywork/mywork1/list/resid/0/recid/0", "moduleId":"viewmodels/mywork1", "nav": true ,"iconCls":"icon icon-settings","type":"myworkpage","navvisible":true ,"viewUrl":"mywork/views/mywork1.html"},
-         { "route": "mywork2","title":"mywork2","resid":"529072606462", "moduleId": "viewmodels/mywork2", "nav": true ,"iconCls":"icon icon-settings","type":"myworkpage","navvisible":true ,"viewUrl":"mywork/views/mywork2.html"}]
+        "myworkRouter": [{ "route": ["","mywork1/:action/resid/:resid/recid/:recid"],"title":"请假申请","resid":"533143158334","hash":"#mywork/mywork1/list/resid/0/recid/0", "moduleId":"viewmodels/mywork1", "nav": true ,"iconCls":"icon icon-settings","type":"myworkpage"},
+         { "route": "mywork2","title":"mywork2","resid":"529072606462", "moduleId": "viewmodels/mywork2", "nav": true ,"iconCls":"icon icon-settings","type":"myworkpage"}]
        
               
    

@@ -42,7 +42,7 @@ define(['durandal/app','knockout','plugins/router','plugins/dialog','jquery','ed
               
               
            }
-           appConfig.app.subtitle(this.myrouter.title);
+           appConfig.app.subtitle(this.getTitle());
        };
        work.getView=function(){
              if (this.action=='list'){
@@ -60,7 +60,7 @@ define(['durandal/app','knockout','plugins/router','plugins/dialog','jquery','ed
                
                  work._compositionComplete();
               }
-           appConfig.app.subtitle(this.myrouter.title);
+           appConfig.app.subtitle(this.getTitle());
        };
      
        work.binding= function () {
@@ -143,7 +143,7 @@ define(['durandal/app','knockout','plugins/router','plugins/dialog','jquery','ed
         // router.navigate("#editform/"+row.REC_RESID+"/record/"+row.REC_ID+"/data/"+JSON.stringify(row)+"/action/browse");
        }
        work.add=function(){
-           router.navigate("#mywork/mywork1/add/resid/"+this.myrouter.resid+"/recid/0");
+           router.navigate("#mywork/mywork1/add/resid/"+this.getViewresid()+"/recid/0");
           // dialog.showMessage('add',"新同事");
            // appConfig.app.showaddbutton(false);
          

@@ -1,12 +1,16 @@
 
-   <a data-bind='click:$root.add' class="button button-add button-nav fab" data-transition='slide-out'>
-      <span class="icon icon-add"></span>
-       添加
-    </a>
-	<!--<ons-fab>
-      <ons-icon icon="md-plus" data-bind='click:$root.add'></ons-icon>
-  </ons-fab>-->
-  <ons-list data-bind='foreach:rows'  >
+   
+     <ons-toolbar>
+    <div class="center"></div>
+    <div class="left">
+      <ons-toolbar-button>
+       
+        <ons-icon data-bind='click:$root.add' icon="ion-plus">添加</ons-icon>
+         
+      </ons-toolbar-button>
+    </div>
+  </ons-toolbar>
+  <ons-list data-bind='foreach:rows' class="list-subhost" >
     
     <ons-list-item  class="list__item"  tappable='true' chevron='true' > 
       <div class="left list__item__left" data-bind='click:$root.browse'>
@@ -17,13 +21,14 @@
         <div class="list__item__title"><span data-bind='text:C3_533398158705'>病假</span></div>
         <div class="list__item__subtitle"><span data-bind='text:C3_533143217561'>2016-01-01 12:00</span></div>
       </div>
-      <div class="right list__item__right" style="font-size: 20px; color: rgb(202, 202, 202);">
+      <div class="right list__item__right" style="font-size: 35px; color: rgb(202, 202, 202);">
         <div><ons-icon    icon="ion-edit" style="margin: 0px 25px 0px 0px;" data-bind='click:$root.edit'></ons-icon>
         </div>
         <div><ons-icon     icon="trash" style="margin: 0px 10px 0px 0px;" data-bind='click:$root.del'></ons-icon></div>
         </div>
     </ons-list-item>
-        
+
   </ons-list>
+ 
    
   
