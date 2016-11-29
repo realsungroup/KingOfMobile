@@ -7,12 +7,13 @@ define(['durandal/app','knockout','plugins/router','plugins/dialog','jquery','du
            savebutton:false,
            action:'',
            back:function(){router.navigateBack()},
-           saveform:function(){
+           saveform:function(dfd){
              if (this.action=='edit')
              { this.editservice.saveData(this.formdata()).then(function(e){
                    if (e.error==0)
                    {
-                       dialog.showMessage(e.message,'');
+                       dialog.showMessage(e.message,'').then(function(){ dfd.resolve('');});
+                      
                    }
                    else
                    {
@@ -26,7 +27,7 @@ define(['durandal/app','knockout','plugins/router','plugins/dialog','jquery','du
                     if (e.error==0)
                     {
                         dialog.showMessage(e.message,'').then(function(){
-                           router.navigateBack();
+                           dfd.resolve('');
                         });
                         
                     }
@@ -35,7 +36,7 @@ define(['durandal/app','knockout','plugins/router','plugins/dialog','jquery','du
                         dialog.showMessage(e.message,'');
                     }
                  },function(error){
-                                dialog.showMessage(error,'');
+                        dialog.showMessage(error,'');
                  }) ;
 
               }
@@ -59,7 +60,7 @@ define(['durandal/app','knockout','plugins/router','plugins/dialog','jquery','du
                   case 'add':
                       this.editservice=new editbase(resid,0);
                       this.originaldata=$.extend({},JSON.parse(json));
-                     this.formdata(JSON.parse(json));
+                      this.formdata(JSON.parse(json));
                       this.savebutton=true;
                      break;
                  
@@ -81,7 +82,8 @@ define(['durandal/app','knockout','plugins/router','plugins/dialog','jquery','du
               {
                   
               }
-              $(function() {
+              if  (this.action!=='browse'){
+                   $(function() {
                             var currYear = (new Date()).getFullYear();
                             var opt = {};
                            // opt.date = { preset: 'date' };
@@ -102,6 +104,8 @@ define(['durandal/app','knockout','plugins/router','plugins/dialog','jquery','du
                             };
                             $(".appDate").mobiscroll($.extend(opt['date'], opt['default']));
                         });
+                    }
+             
           }
 
        };

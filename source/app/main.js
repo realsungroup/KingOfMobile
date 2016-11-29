@@ -1,4 +1,4 @@
-﻿requirejs.config({
+requirejs.config({
     paths: {
         'text': '../lib/require/text',
         'durandal':'../lib/durandal/js',
@@ -11,7 +11,8 @@
         'myworkshell':'mywork/',
         'myworkbase':'mywork/',
         'mobiscroll':'../lib/mobiscorll/mobiscroll.2.13.2',
-        'editbase':'host/editbase'
+        'editbase':'host/editbase',
+        'editform':'host/editform'
         
     },
     shim: {

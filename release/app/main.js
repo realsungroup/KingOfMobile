@@ -11,7 +11,8 @@ requirejs.config({
         'myworkshell':'mywork/',
         'myworkbase':'mywork/',
         'mobiscroll':'../lib/mobiscorll/mobiscroll.2.13.2',
-        'editbase':'host/editbase'
+        'editbase':'host/editbase',
+        'editform':'host/editform'
         
     },
     shim: {

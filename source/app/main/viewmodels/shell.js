@@ -1,4 +1,4 @@
-﻿define(['plugins/router', 'durandal/app','knockout',,'realsun/workbase'], function (router, app,ko) {
+define(['plugins/router', 'durandal/app','knockout',,'realsun/workbase'], function (router, app,ko) {
 
     var router= router.map(appConfig.app.mainRouter).buildNavigationModel();
      
