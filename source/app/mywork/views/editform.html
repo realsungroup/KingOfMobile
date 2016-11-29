@@ -2,19 +2,21 @@
  
 <ons-toolbar>
    
-    <div class="left">
+    <div class="right">
       <ons-toolbar-button>
        
         <ons-icon data-bind="click:back" icon="ion-chevron-left"> 返回</ons-icon>
          
       </ons-toolbar-button>
     </div>
-  </ons-toolbar>
+</ons-toolbar>
+<section  >
 <ons-list-header>开始时间</ons-list-header>
 <input class="form-control appDate" data-bind="value:editform.formdata().C3_533143179815">
 
 <ons-list-header>结束时间</ons-list-header>
 <input class="form-control appDate" data-bind="value:editform.formdata().C3_533143217561">
+</section>
 <section  >
 <ons-button modifier="large" data-bind="visible:editform.savebutton,click:saveform">保存</ons-button>
  <!--<p></p>-->

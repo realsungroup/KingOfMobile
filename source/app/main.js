@@ -10,7 +10,7 @@ requirejs.config({
         'realsun': '../lib/realsun/js',
         'myworkshell':'mywork/',
         'myworkbase':'mywork/',
-        'mobiscroll':'../lib/mobiscorll/mobiscroll.2.13.2',
+        'mobiscroll':'../lib/mobiscorll/mobiscroll.custom-3.0.0-beta2.min',
         'editbase':'host/editbase',
         'editform':'host/editform'
         

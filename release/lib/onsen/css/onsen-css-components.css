@@ -992,12 +992,12 @@ ons-range[disabled] .range {
   -moz-box-pack: justify;
   -ms-flex-pack: justify;
   justify-content: space-between;
-  height: 56px;
+  height: 48px;
   border-bottom: 0;
   -webkit-box-shadow: 0 1px 5px rgba(0,0,0,0.3);
   box-shadow: 0 1px 5px rgba(0,0,0,0.3);
   padding: 0;
-  background-color: #009688;
+  background-color:silver;
   -webkit-background-size: 0;
   background-size: 0;
 }

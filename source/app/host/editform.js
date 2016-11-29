@@ -90,14 +90,19 @@ define(['durandal/app','knockout','plugins/router','plugins/dialog','jquery','du
                             //opt.datetime = { preset: 'datetime' };
                             // opt.time = { preset: 'time' };
                             opt.default = {
-                                theme: 'sense-ui', //皮肤样式
-                                display: 'bottom', //显示方式
+                                theme: 'bootstrap', //皮肤样式
+                                display: 'center', //显示方式
                                 mode: 'scroller', //日期选择模式
                                 dateFormat: 'yy-mm-dd',
                                 timeFormat:'HH:ii',
                                 preset: 'datetime',
                                 lang: 'zh',
                                 showNow: true,
+                                steps: { 
+                                            minute: 15,
+                                            second: 5,
+                                            zeroBased: true
+                                        },
                                 nowText: "今天",
                                 startYear: currYear, //开始年份
                                 endYear: currYear + 2, //结束年份

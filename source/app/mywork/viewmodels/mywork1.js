@@ -2,7 +2,7 @@ define(['durandal/app','knockout','plugins/router','plugins/dialog','jquery','ed
     function (app,ko,router,dialog,jquery,editbase,system,editform) {
       
        var work=new myworkbase();
-       
+      
        work.activate=function(action,resid,recid){
            if (action==undefined){
                this.action='list';
@@ -54,11 +54,12 @@ define(['durandal/app','knockout','plugins/router','plugins/dialog','jquery','ed
 
        }
        work.compositionComplete=function(){
-       
+
          
             if (this.action=='list'){
                
-                 work._compositionComplete();
+                    work._compositionComplete();
+
               }
            appConfig.app.subtitle(this.getTitle());
        };

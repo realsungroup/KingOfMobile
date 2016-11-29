@@ -7,9 +7,11 @@
                 this.cmswhere=appConfig.app.ko.observable("");
                 this.lastError=appConfig.app.ko.observable("");
                 this.total=appConfig.app.ko.observable(0);
-                this.maxPageIndex=function(){ return appConfig.app.ko.pureComputed(function() {
-                    var self=this;
-                    return Math.ceil(appConfig.app.ko.utils.unwrapObservable(self.total) / self.pageSize) - 2;
+                this.maxPageIndex=function(){ 
+                     var self=this;
+                    return appConfig.app.ko.pureComputed(function() {
+                   
+                    return Math.ceil(appConfig.app.ko.utils.unwrapObservable(self.total) / self.pageSize) - 1;
                 }, self);};
                 this.myrouter=null;
                 this.getViewresid=function(){
@@ -95,6 +97,39 @@
                 if ( appConfig.app.dbs!==null)
                   {
                       self.pageIndexChanged(self.pageIndex);
+//    -----------下拉刷新
+                 
+                    try {
+                           var pullHook = document.getElementById('pull-hook');
+                      
+                            pullHook.addEventListener('changestate', function(event) {
+                            var message = '';
+
+                            switch (event.state) {
+                            case 'initial':
+                                message = '下拉刷新';
+                                break;
+                            case 'preaction':
+                                message = '';
+                                break;
+                            case 'action':
+                                message = '正在加载...';
+                                break;
+                            }
+                        pullHook.innerHTML = message;
+                    });
+
+                        pullHook.onAction = function(done) {
+                        
+                            fetchPage(self);    
+                            setTimeout(done, 100);
+                        };
+                        
+                    } catch (error) {
+                        
+                    }
+                 
+// --------------------------------------------------------------------
                       
                   }         
                

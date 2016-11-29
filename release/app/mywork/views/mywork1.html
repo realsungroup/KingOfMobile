@@ -1,7 +1,7 @@
 
+    
+    <ons-toolbar  >
    
-     <ons-toolbar>
-    <div class="center"></div>
     <div class="left">
       <ons-toolbar-button>
        
@@ -9,10 +9,23 @@
          
       </ons-toolbar-button>
     </div>
+     <div class="center"></div>
+          <ul class="pagination">
+        <!-- ko foreach: ko.utils.range(0, maxPageIndex()) -->
+        <li>
+            <a href="#" data-bind="text: $data+1, click: function () { $root.pageIndexChanged($data); }" ></a>
+             <!--<ons-icon data-bind="text: $data+1, click: function () { $root.pageIndexChanged($data);mini.parse(); }" icon="ion-plus"></ons-icon>-->
+        </li>
+        <!-- /ko -->
+      </ul>
+    </div>
   </ons-toolbar>
+  <ons-pull-hook id="pull-hook">
+    Pull to refresh
+  </ons-pull-hook>
   <ons-list data-bind='foreach:rows' class="list-subhost" >
     
-    <ons-list-item  class="list__item"  tappable='true' chevron='true' > 
+    <ons-list-item  class="list__item"  > 
       <div class="left list__item__left" data-bind='click:$root.browse'>
         <div data-bind='attr:{class:C3_533402468773}'>
         <i data-bind='attr:{class:C3_533407368877}'></i></div>
