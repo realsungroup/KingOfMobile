@@ -88,15 +88,9 @@ section2 {
     height: 100%;
     background: #efeff4;
     display: inherit;
+   z-index: 1000;
+   
     
 }
-page__content {
-    background-color: #f9f9f9;
-    
-    top: 0px;
-    left: 0px;
-    right: 0px;
-    bottom: 0px;
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    box-sizing: border-box;}
+ 
+ 
