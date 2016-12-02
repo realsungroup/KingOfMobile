@@ -3,6 +3,7 @@
             function workbase()
             {
                 
+                
                 this.rows=appConfig.app.ko.observableArray([]);
                 this.key=appConfig.app.ko.observable("");
                 this.cmswhere=appConfig.app.ko.observable("");
@@ -68,7 +69,7 @@
                          self.myrouter=myworkshell.getCurroute(self);
                          appConfig.app.curRouterHash=self.myrouter.hash;
                          myworkshell.setSubtitle(self.myrouter.title);
-                         this.nextrowindex=this.getPagesize()*(this.pageIndex+1);
+                         this.nextrowindex=this.getPagesize();
                          if (appConfig.app.runmode=="weixin"){
                             openid=appConfig.appfunction.system.getWeixinOpenid();
                             //weixin 登入  
@@ -188,9 +189,9 @@
             return   workbase;
         }());
          
-  fetchPage=function(self,action){
+  fetchPage=function(self){
 
-                
+                self.nextrowindex=self.getPagesize();
                 fetchrows(self,self.getPagesize(),self.pageIndex,function(result,data,total){
                     if (result)
                     { 

@@ -11,8 +11,13 @@ define(['durandal/app','knockout','plugins/router','plugins/dialog','jquery','ed
                               callback();
                         });
                      
-                
+              
            }
+           else
+           {  
+               callback();
+            }
+           
         }
        work.activate=function(action,resid,recid){
            if (action==undefined){
