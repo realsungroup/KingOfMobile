@@ -117,8 +117,12 @@ define(['durandal/app','knockout','plugins/router','plugins/dialog','jquery','ed
             promise.then(function(e){
                 if (that.action=='add')
                 {
-                    that.rows.push(e.data[0]);
+                    that.rows.unshift(e.data[0]);
                     that.total(that.total()+1);
+                }
+                else
+                {
+                   that.rows.sort(function (left, right) { return left.REC_EDTTIME == right.REC_EDTTIME ? 0 : (left.REC_EDTTIME < right.REC_EDTTIME ? 1 : -1) }) 
                 }
                 router.navigate("#mywork/mywork1/list/resid/0/recid/0");
                 // $("#subpage").html(appConfig.app.mywork1html);

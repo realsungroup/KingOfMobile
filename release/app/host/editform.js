@@ -8,12 +8,16 @@ define(['durandal/app','knockout','plugins/router','plugins/dialog','jquery','du
            action:'',
            back:function(){router.navigateBack()},
            saveform:function(dfd){
+               var self=this;
              if (this.action=='edit')
              { this.editservice.saveData(this.formdata()).then(function(e){
                    if (e.error==0)
                    {
-                       dialog.showMessage(e.message,'').then(function(){ dfd.resolve('');});
-                      
+                       dialog.showMessage(e.message,'').then(function(){ 
+                           self.formdata(e.data[0]);
+                           dfd.resolve('');
+                        });
+                       
                    }
                    else
                    {
