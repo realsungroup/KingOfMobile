@@ -1,5 +1,6 @@
 
-    
+  <ons-page on-infinite-scroll='appConfig.app.infinitefunction'  class="mypage">
+ 
     <ons-toolbar  >
    
     <div class="left">
@@ -10,21 +11,31 @@
       </ons-toolbar-button>
     </div>
      <div class="center"></div>
-          <ul class="pagination">
-        <!-- ko foreach: ko.utils.range(0, maxPageIndex()) -->
-        <li>
-            <a href="#" data-bind="text: $data+1, click: function () { $root.pageIndexChanged($data); }" ></a>
+          
+          <span data-bind='text:rows().length'/>
+          <span>/</span>
+          <span data-bind='text:total()'/>
+          <!--<ul class="pagination">-->
+         <!--ko foreach: ko.utils.range(0, maxPageIndex()) -->
+        <!--<li>-->
+            <!--<a href="#" data-bind="text: $data+1, click: function () { $root.pageIndexChanged($data); }" ></a>-->
              <!--<ons-icon data-bind="text: $data+1, click: function () { $root.pageIndexChanged($data);mini.parse(); }" icon="ion-plus"></ons-icon>-->
-        </li>
+        <!--</li>-->
         <!-- /ko -->
-      </ul>
+      <!--</ul>-->
     </div>
   </ons-toolbar>
   <ons-pull-hook id="pull-hook">
-    Pull to refresh
+     <ons-progress-circular indeterminate></ons-progress-circular>
   </ons-pull-hook>
-  <ons-list data-bind='foreach:rows' class="list-subhost" >
+  
     
+ 
+  <ons-list   data-bind="foreach:rows"  class="list-subhost" >
+     <!--<ons-lazy-repeat id="infinite-list" >-->
+    
+   
+     
     <ons-list-item  class="list__item"  > 
       <div class="left list__item__left" data-bind='click:$root.browse'>
         <div data-bind='attr:{class:C3_533402468773}'>
@@ -39,9 +50,10 @@
         </div>
         <div><ons-icon     icon="trash" style="margin: 0px 10px 0px 0px;" data-bind='click:$root.del'></ons-icon></div>
         </div>
-    </ons-list-item>
 
+    </ons-list-item>
+       
   </ons-list>
  
-   
+    </ons-page>
   

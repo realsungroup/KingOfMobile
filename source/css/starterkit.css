@@ -52,7 +52,7 @@
 }
 .list-subhost {
     
-    margin-top: 50px}
+    margin-top: 5px}
     
 
 section {
@@ -78,3 +78,25 @@ section2 {
 {
     top:40px
 }
+.mypage
+{
+    box-sizing: border-box;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: #efeff4;
+    display: inherit;
+    
+}
+page__content {
+    background-color: #f9f9f9;
+    
+    top: 0px;
+    left: 0px;
+    right: 0px;
+    bottom: 0px;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;}

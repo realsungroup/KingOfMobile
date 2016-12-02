@@ -36,7 +36,10 @@
         "userProfile":null,
         "curRouterHash":"mywork",
         "subtitle":"",
+        "pagemode":"lazyrepeat",
         "showback":false,
+        "leaveitemhtml":"",
+        "infinitefunction":null,
         "mainRouter":[
                 { "route": "", "title":"首页", "moduleId": "main/viewmodels/welcome", "nav": true,"iconCls":"icon icon-home" ,"type":"root"},
                 { "route": "mywork*detail","title":"我的工作", "moduleId": "mywork/myworkshell", "nav": true ,"iconCls":"icon icon-me","type":"root"},
@@ -45,7 +48,7 @@
                
                 
             ,
-        "myworkRouter": [{ "route": ["","mywork1/:action/resid/:resid/recid/:recid"],"title":"请假申请","resid":"533143158334","hash":"#mywork/mywork1/list/resid/0/recid/0", "moduleId":"viewmodels/mywork1", "nav": true ,"iconCls":"icon icon-settings","type":"myworkpage"},
+        "myworkRouter": [{ "route": ["","mywork1/:action/resid/:resid/recid/:recid"],"title":"请假申请","resid":"533143158334","hash":"#mywork/mywork1/list/resid/0/recid/0", "moduleId":"viewmodels/mywork1", "nav": true ,"iconCls":"icon icon-settings","pagemode":"lazyrepeat","pagesize":5,"type":"myworkpage"},
          { "route": "mywork2","title":"mywork2","resid":"529072606462", "moduleId": "viewmodels/mywork2", "nav": true ,"iconCls":"icon icon-settings","type":"myworkpage"}]
        
               

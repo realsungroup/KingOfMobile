@@ -2,7 +2,18 @@ define(['durandal/app','knockout','plugins/router','plugins/dialog','jquery','ed
     function (app,ko,router,dialog,jquery,editbase,system,editform) {
       
        var work=new myworkbase();
-      
+       work.infinitefunction=function(callback){
+           if (work.total()>work.rows().length)
+           {  
+                
+                        work.fetchnextrow(work,function(){
+                               work.nextrowindex++;
+                              callback();
+                        });
+                     
+                
+           }
+        }
        work.activate=function(action,resid,recid){
            if (action==undefined){
                this.action='list';
@@ -43,6 +54,7 @@ define(['durandal/app','knockout','plugins/router','plugins/dialog','jquery','ed
               
            }
            appConfig.app.subtitle(this.getTitle());
+           appConfig.app.infinitefunction=this.infinitefunction;
        };
        work.getView=function(){
              if (this.action=='list'){

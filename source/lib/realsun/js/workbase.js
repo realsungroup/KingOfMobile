@@ -1,17 +1,31 @@
  
-  var workbase=(function(){
+  workbase=(function(){
             function workbase()
             {
+                
                 this.rows=appConfig.app.ko.observableArray([]);
                 this.key=appConfig.app.ko.observable("");
                 this.cmswhere=appConfig.app.ko.observable("");
                 this.lastError=appConfig.app.ko.observable("");
                 this.total=appConfig.app.ko.observable(0);
+                this.setPagesize=function(size){
+                    this.myrouter.pagesize=size;
+                };
+                this.getPagesize=function(){
+                    if (this.myrouter.pagesize==undefined){
+                        return this.pageSize;
+                    }
+                    else{
+                        return this.myrouter.pagesize;
+                    }
+                    
+
+                };
                 this.maxPageIndex=function(){ 
                      var self=this;
                     return appConfig.app.ko.pureComputed(function() {
                    
-                    return Math.ceil(appConfig.app.ko.utils.unwrapObservable(self.total) / self.pageSize) - 1;
+                    return Math.ceil(appConfig.app.ko.utils.unwrapObservable(self.total) / self.getPagesize()) - 1;
                 }, self);};
                 this.myrouter=null;
                 this.getViewresid=function(){
@@ -54,7 +68,7 @@
                          self.myrouter=myworkshell.getCurroute(self);
                          appConfig.app.curRouterHash=self.myrouter.hash;
                          myworkshell.setSubtitle(self.myrouter.title);
-                      
+                         this.nextrowindex=this.getPagesize()*(this.pageIndex+1);
                          if (appConfig.app.runmode=="weixin"){
                             openid=appConfig.appfunction.system.getWeixinOpenid();
                             //weixin 登入  
@@ -97,9 +111,14 @@
                 if ( appConfig.app.dbs!==null)
                   {
                       self.pageIndexChanged(self.pageIndex);
+                   try {
+// --------------------lazy repeat
+                       
+                      
+                        
 //    -----------下拉刷新
                  
-                    try {
+                   
                            var pullHook = document.getElementById('pull-hook');
                       
                             pullHook.addEventListener('changestate', function(event) {
@@ -107,20 +126,21 @@
 
                             switch (event.state) {
                             case 'initial':
-                                message = '下拉刷新';
+                               // message = '下拉刷新';
                                 break;
                             case 'preaction':
-                                message = '';
+                              //  message = '';
                                 break;
                             case 'action':
-                                message = '正在加载...';
+                              //  message = '正在加载...';
                                 break;
                             }
-                        pullHook.innerHTML = message;
+                        //pullHook.innerHTML = message;
                     });
 
                         pullHook.onAction = function(done) {
-                        
+                           
+                         
                             fetchPage(self);    
                             setTimeout(done, 100);
                         };
@@ -139,10 +159,24 @@
                       var self=this;
                       self.__moduleId__='mywork/viewmodels/'+moduleid;
               };
-         
-           this.pageSize=appConfig.app.defaultpagesize;
-           
+        
+         this.fetchnextrow=function(self,callback){
+             fetchrows(self,1,self.nextrowindex,function(result,data,total){
+                    if (result){ 
+                        if (data.length>0)
+                        {
+                             self.rows.push(data[0]);
+
+                        }
+                          
+                     }
+                    callback();
+               }
+             );
+         }
+          this.pageSize=appConfig.app.defaultpagesize;
           this.pageIndex=0;
+          this.nextrowindex=this.pageSize*(this.pageIndex+1);
           this.pageIndexChanged=function(index){   
              var self=this;
              self.pageIndex=index;
@@ -153,10 +187,11 @@
             }
             return   workbase;
         }());
-  fetchPage=function(self){
+         
+  fetchPage=function(self,action){
 
                 
-                fetchrows(self,self.pageSize,self.pageIndex,function(result,data,total){
+                fetchrows(self,self.getPagesize(),self.pageIndex,function(result,data,total){
                     if (result)
                     { 
                             

@@ -41,6 +41,7 @@ define(['durandal/system', 'knockout','durandal/app', 'durandal/viewLocator', 'b
          appConfig.app.subtitle=ko.observable("");
          appConfig.app.showback=ko.observable(false);
           appConfig.app.showaddbutton=ko.observable(false);
+          $.get("app/mywork/views/leaveitem.html",function(data){appConfig.app.leaveitemhtml=data;});
          app.setRoot('main/viewmodels/shell', 'entrance');});
     });
 });
