@@ -69,6 +69,11 @@
                          self.myrouter=myworkshell.getCurroute(self);
                          appConfig.app.curRouterHash=self.myrouter.hash;
                          myworkshell.setSubtitle(self.myrouter.title);
+                         if (self.myrouter.pagesize<Math.floor(document.body.clientHeight*0.015))
+                         {
+                              self.myrouter.pagesize=Math.floor(document.body.clientHeight*0.015)
+                         }
+                        
                          this.nextrowindex=this.getPagesize();
                          if (appConfig.app.runmode=="weixin"){
                             openid=appConfig.appfunction.system.getWeixinOpenid();
