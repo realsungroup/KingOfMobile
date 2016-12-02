@@ -27,7 +27,7 @@ define(['durandal/app','knockout','plugins/router','plugins/dialog','jquery','du
                     if (e.error==0)
                     {
                         dialog.showMessage(e.message,'').then(function(){
-                           dfd.resolve('');
+                           dfd.resolve(e);
                         });
                         
                     }
@@ -46,7 +46,7 @@ define(['durandal/app','knockout','plugins/router','plugins/dialog','jquery','du
                 this.formdata(this.originaldata);
                 
            },
-           activate:function(resid,recid,json,action)
+           activate:function(resid,recid,json,action,row)
            {
              
              this.action=action;
@@ -54,7 +54,8 @@ define(['durandal/app','knockout','plugins/router','plugins/dialog','jquery','du
                  case 'edit':
                      this.editservice=new editbase(resid,recid);
                      this.originaldata=$.extend({},JSON.parse(json));
-                     this.formdata(JSON.parse(json));
+                    //  this.formdata(JSON.parse(json));
+                       this.formdata(row);
                      this.savebutton=true;
                      break;
                   case 'add':

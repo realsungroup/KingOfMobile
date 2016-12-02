@@ -93,8 +93,8 @@
                          }
                         if ( appConfig.app.dbs!==null)
                         {
-                        
-                            self.pageIndexChanged(self.pageIndex);
+                           if (self.rows().length==0){ self.pageIndexChanged(self.pageIndex);}
+                           
                             
                         }
                         else{
@@ -116,11 +116,9 @@
               var self=this;
                 if ( appConfig.app.dbs!==null)
                   {
-                      self.pageIndexChanged(self.pageIndex);
+                       if (self.rows().length==0){ self.pageIndexChanged(self.pageIndex);}
                    try {
-// --------------------lazy repeat
-                       
-                      
+             
                         
 //    -----------下拉刷新
                  

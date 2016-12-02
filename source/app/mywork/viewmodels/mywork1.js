@@ -1,7 +1,8 @@
-define(['durandal/app','knockout','plugins/router','plugins/dialog','jquery','editbase','durandal/system','editform'], 
-    function (app,ko,router,dialog,jquery,editbase,system,editform) {
+define(['durandal/app','knockout','plugins/router','plugins/dialog','jquery','editbase','durandal/system','editform','durandal/binder'], 
+    function (app,ko,router,dialog,jquery,editbase,system,editform,binder) {
       
        var work=new myworkbase();
+      
        work.infinitefunction=function(callback){
            if (work.total()>work.rows().length)
            {  
@@ -53,7 +54,7 @@ define(['durandal/app','knockout','plugins/router','plugins/dialog','jquery','ed
               {
                 var o=$.grep(rows,function(row,i){return row["REC_ID"]==that.formrecid})[0];
                 var json=JSON.stringify(o);
-                that.editform.activate(that.formresid,that.formrecid,json,that.action);
+                that.editform.activate(that.formresid,that.formrecid,json,that.action,o);
               }
               
               
@@ -70,9 +71,10 @@ define(['durandal/app','knockout','plugins/router','plugins/dialog','jquery','ed
              }
 
        }
-       work.compositionComplete=function(){
+       work.compositionComplete=function(view){
 
-         
+            if (this.action=='list')
+           {  work.mainview=view;}
             if (this.action=='list'){
                
                     work._compositionComplete();
@@ -81,11 +83,14 @@ define(['durandal/app','knockout','plugins/router','plugins/dialog','jquery','ed
            appConfig.app.subtitle(this.getTitle());
        };
      
-       work.binding= function () {
+       work.binding= function (view) {
+         
             
             return { cacheViews:false }; //cancels view caching for this module, allowing the triggering of the detached callback
         };
-        work.bindingComplete= function () {
+        work.bindingComplete= function (view) {
+             
+          
           
         };
         work.attached=function(){
@@ -99,7 +104,7 @@ define(['durandal/app','knockout','plugins/router','plugins/dialog','jquery','ed
         }
 // -----------------------------form section
        work.saveform=function(){
-           
+         var that=this;
          var promise=system.defer(function(dfd){
                                     try {
                                         work.editform.saveform(dfd);
@@ -109,8 +114,20 @@ define(['durandal/app','knockout','plugins/router','plugins/dialog','jquery','ed
                                     
                                     }
                                 }).promise();
-            promise.then(function(){
+            promise.then(function(e){
+                if (that.action=='add')
+                {
+                    that.rows.push(e.data[0]);
+                    that.total(that.total()+1);
+                }
                 router.navigate("#mywork/mywork1/list/resid/0/recid/0");
+                // $("#subpage").html(appConfig.app.mywork1html);
+                // setTimeout(function() {
+                //      binder.bind(work,work.mainview);
+                // }, 500);
+               
+               
+               
             });
        };
        work.back=function(){
@@ -136,6 +153,7 @@ define(['durandal/app','knockout','plugins/router','plugins/dialog','jquery','ed
                         {
                             dialog.showMessage('删除成功','').then(function(){
                                  selfwork.rows.remove(function(row){return row["REC_ID"]==self.REC_ID;});
+                                 selfwork.total(selfwork.total()-1);
                             });
                            
                         }

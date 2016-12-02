@@ -38,7 +38,7 @@
         "subtitle":"",
         "pagemode":"lazyrepeat",
         "showback":false,
-        "leaveitemhtml":"",
+        "mywork1html":"",
         "infinitefunction":null,
         "mainRouter":[
                 { "route": "", "title":"首页", "moduleId": "main/viewmodels/welcome", "nav": true,"iconCls":"icon icon-home" ,"type":"root"},
