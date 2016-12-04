@@ -61,6 +61,12 @@ section {
 section2 {
     margin: 20px 20px;
 }
+section3 {
+       margin-top: 100px;
+    margin-right: 20px;
+    margin-bottom: 48px;
+    margin-left: 20px;
+}
 
 .navbar-nav li.loader {
     margin: 12px 6px 0 6px;

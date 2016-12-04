@@ -113,6 +113,13 @@ define(['durandal/app','knockout','plugins/router','plugins/dialog','jquery','du
                                 endYear: currYear + 2, //结束年份
                             };
                             $(".appDate").mobiscroll($.extend(opt['date'], opt['default']));
+                            $('.appSelect').mobiscroll().select({
+                                            theme: 'bootstrap',      // Specify theme like: theme: 'ios' or omit setting to use default
+                                            lang: 'zh',   // Specify language like: lang: 'pl' or omit setting to use default
+                                            display: 'center',  // Specify display mode like: display: 'bottom' or omit setting to use default
+                                            mode: 'scroller',        // More info about mode: https://docs.mobiscroll.com/3-0-0_beta2/select#!opt-mode
+                                            minWidth: 100                  // More info about minWidth: https://docs.mobiscroll.com/3-0-0_beta2/select#!opt-minWidth
+                                        });
                         });
                     }
              

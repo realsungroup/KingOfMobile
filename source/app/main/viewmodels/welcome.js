@@ -1,7 +1,25 @@
 define(['durandal/app','knockout','plugins/router','plugins/dialog'], function (app,ko,router,dialog,scanner) {
      var user = ko.observable(),
          upass = ko.observable();
-
+     var getLeaveitems=function(callback){
+         // ------------get leaveitems
+                         appConfig.app.dbs.dbGetdata( appConfig.app.leavedefineresid,"","","",function(data,subdata,total){
+                               if (total==0)
+                               {
+                                    dialog.showMessage('获取假期定义失败',"新同事");
+                                   
+                               }
+                               appConfig.app.leaveitems=ko.observableArray(data);
+                               callback(true);
+                               
+                         },function(data){
+                               dialog.showMessage(data.message,"获取假期定义失败");
+                               callback(false);
+                         },function(){
+                               dialog.showMessage('服务响应错误',"获取假期定义失败");
+                               callback(false);
+                         },0,0);
+     }
   
        return  {
                  user:user,
@@ -111,6 +129,7 @@ define(['durandal/app','knockout','plugins/router','plugins/dialog'], function (
                     }
                     else{
                         
+                        
                     }
                    
 
@@ -122,7 +141,17 @@ define(['durandal/app','knockout','plugins/router','plugins/dialog'], function (
                      var baseUrl=appConfig.app.userProfile.EMP_LOGIN_URL;
                      var dbs=new dbHelper(baseUrl,data.user,data.ucode);
                      appConfig.app.dbs=dbs;
-                     router.navigate(appConfig.app.curRouterHash);
+                     getLeaveitems(function(result){
+                         if (result){
+                             router.navigate(appConfig.app.curRouterHash);
+                            }
+                            else{
+                                  appConfig.appfunction.system.clearAppConfig();
+                                  router.navigate('#');
+                            }
+
+                     });
+                     
                     
                 }
                 function fnError(data){

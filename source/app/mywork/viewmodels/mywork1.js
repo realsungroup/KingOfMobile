@@ -2,7 +2,11 @@ define(['durandal/app','knockout','plugins/router','plugins/dialog','jquery','ed
     function (app,ko,router,dialog,jquery,editbase,system,editform,binder) {
       
        var work=new myworkbase();
-      
+       work.selectItems=function(){
+        
+            $('#selectitems').mobiscroll('show');
+            return false;
+       }
        work.infinitefunction=function(callback){
            if (work.total()>work.rows().length)
            {  
@@ -97,6 +101,7 @@ define(['durandal/app','knockout','plugins/router','plugins/dialog','jquery','ed
              if (this.action!=='list'){
                
                  this.editform.attached();
+                 mobiscroll.$('#selectitems').val(this.editform.formdata().C3_533398158705).trigger('change');
               }
              
 
@@ -107,6 +112,7 @@ define(['durandal/app','knockout','plugins/router','plugins/dialog','jquery','ed
          var that=this;
          var promise=system.defer(function(dfd){
                                     try {
+                                        that.editform.formdata().C3_533398158705=mobiscroll.$('#selectitems').val();
                                         work.editform.saveform(dfd);
                                     
                                     } catch (error) {
