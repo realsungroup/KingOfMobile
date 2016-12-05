@@ -2,18 +2,35 @@ define(['durandal/app','knockout','plugins/router','plugins/dialog','jquery','ed
     function (app,ko,router,dialog,jquery,editbase,system,editform,binder) {
       
        var work=new myworkbase();
+    work.testresid1=function(){
+        work.currentResidChanged("534275691867");
+    }
+     work.testresid2=function(){
+        work.currentResidChanged("533143158334");
+    }
+    work.stateChanged=function(){
+         work.currentResidChanged(mobiscroll.$('#selectstates').val());
+       // alert('change');
+    }
+     //在列表窗口弹出申请状态选择窗口 
+     work.selectStates=function(){
+        
+            $('#selectstates').mobiscroll('show');
+            return false;
+       }
+    //在编辑窗口弹出假期类别选择窗口 
        work.selectItems=function(){
         
             $('#selectitems').mobiscroll('show');
             return false;
        }
+    //向下滚动逐行取记录
        work.infinitefunction=function(callback){
            if (work.total()>work.rows().length)
            {  
-                
                         work.fetchnextrow(work,function(){
                                work.nextrowindex++;
-                              callback();
+                               callback();
                         });
                      
               
@@ -24,16 +41,32 @@ define(['durandal/app','knockout','plugins/router','plugins/dialog','jquery','ed
             }
            
         }
-       work.activate=function(action,resid,recid){
+    //activate
+        /**参数说明
+         * @action "list/add/edit/browse"
+         * @resid showMessage
+         * @recid {string} message The message to display in the dialog.
+         * @e {string} [title] The title message.
+         */
+       work.activate=function(action,resid,recid,e){
+           if (e!==undefined)
+           {
+               if (e.scrolltop){this.currentPagescrolltop=e.scrolltop;}
+               if (e.selectedrecid){this.selectedRecid=e.selectedrecid}
+           }
+           
+           
            if (action==undefined){
                this.action='list';
                this.formresid=0;
                this.formrecid=0;
+               
            }
            else{
                this.action=action;
                this.formresid=resid;
                this.formrecid=recid;
+              
            }
            if (this.action=='list'){
                
@@ -47,7 +80,7 @@ define(['durandal/app','knockout','plugins/router','plugins/dialog','jquery','ed
               if (that.action=='add')
               {
                  var emptyrow={};
-                        // console.log(row);
+                  
                  emptyrow.C3_533143179815=(new Date()).format('yyyy-MM-dd hh:00');
                  emptyrow.C3_533143217561=(new Date()).format('yyyy-MM-dd hh:00');
                  emptyrow.C3_533398158705='病假';
@@ -66,6 +99,7 @@ define(['durandal/app','knockout','plugins/router','plugins/dialog','jquery','ed
            appConfig.app.subtitle(this.getTitle());
            appConfig.app.infinitefunction=this.infinitefunction;
        };
+    //get view
        work.getView=function(){
              if (this.action=='list'){
                  return 'mywork/views/mywork1.html'
@@ -75,6 +109,7 @@ define(['durandal/app','knockout','plugins/router','plugins/dialog','jquery','ed
              }
 
        }
+    //compositionComplete
        work.compositionComplete=function(view){
 
             if (this.action=='list')
@@ -82,38 +117,57 @@ define(['durandal/app','knockout','plugins/router','plugins/dialog','jquery','ed
             if (this.action=='list'){
                
                     work._compositionComplete();
+                    // ------------开始定位当前的记录
+                    if  (this.currentPagescrolltop>0)
+                    {
+                       
+                       
+                        $('.page__content').animate({'scrollTop':this.currentPagescrolltop},1000);
+                         
+                    }
 
               }
            appConfig.app.subtitle(this.getTitle());
+
        };
-     
+    //binding
        work.binding= function (view) {
          
             
             return { cacheViews:false }; //cancels view caching for this module, allowing the triggering of the detached callback
         };
+    //bindingComplete
         work.bindingComplete= function (view) {
              
           
           
         };
+    //attached
         work.attached=function(){
+            var self=this;
              if (this.action!=='list'){
                
                  this.editform.attached();
                  mobiscroll.$('#selectitems').val(this.editform.formdata().C3_533398158705).trigger('change');
               }
+              else{
+                
+                  mobiscroll.$('#selectstates').change(function(){self.stateChanged()});
+                  mobiscroll.$('#selectstates').val('534275691867').trigger('change'); 
+              }
              
 
 
         }
-// -----------------------------form section
+// -----------------------------form section 编辑或查阅窗口模式下的功能
+    //保存记录
        work.saveform=function(){
          var that=this;
          var promise=system.defer(function(dfd){
                                     try {
                                         that.editform.formdata().C3_533398158705=mobiscroll.$('#selectitems').val();
                                         work.editform.saveform(dfd);
+                                        
                                     
                                     } catch (error) {
                                         dfd.reject(error);
@@ -124,33 +178,38 @@ define(['durandal/app','knockout','plugins/router','plugins/dialog','jquery','ed
                 if (that.action=='add')
                 {
                     that.rows.unshift(e.data[0]);
+                    work.selectedRecid=e.data[0].REC_ID;
                     that.total(that.total()+1);
                 }
                 else
                 {
-                   that.rows.sort(function (left, right) { return left.REC_EDTTIME == right.REC_EDTTIME ? 0 : (left.REC_EDTTIME < right.REC_EDTTIME ? 1 : -1) }) 
+                    work.selectedRecid= that.editform.formdata().REC_ID;
+                  // that.rows.sort(function (left, right) { return left.REC_EDTTIME == right.REC_EDTTIME ? 0 : (left.REC_EDTTIME < right.REC_EDTTIME ? 1 : -1) }) 
                 }
-                router.navigate("#mywork/mywork1/list/resid/0/recid/0");
-                // $("#subpage").html(appConfig.app.mywork1html);
-                // setTimeout(function() {
-                //      binder.bind(work,work.mainview);
-                // }, 500);
-               
+                 
+                router.navigate("#mywork/mywork1/list/resid/0/recid/0?scrolltop="+that.currentPagescrolltop+"&selectedrecid="+ work.selectedRecid);
+          
                
                
             });
        };
+    //返回列表
        work.back=function(){
-            router.navigate("#mywork/mywork1/list/resid/0/recid/0");
+                    
+                router.navigate("#mywork/mywork1/list/resid/0/recid/0?scrolltop="+work.currentPagescrolltop+"&selectedrecid="+ work.selectedRecid);
+           
        };
-// ------------------------------list section----------------------------------------------//
+// ------------------------------list section-列表模式下的功能------------------------------------//
+  //编辑记录  
        work.edit=function(row){
-          // dialog.showMessage('edit',"新同事");
-          // router.navigate("#editform/"+row.REC_RESID+"/record/"+row.REC_ID+"/data/"+JSON.stringify(row)+"/action/edit");
-          router.navigate("#mywork/mywork1/edit/resid/"+row.REC_RESID+"/recid/"+row.REC_ID);
+          work.currentPagescrolltop=work.getcurrentPagescrolltop();
+          work.selectedRecid=row.REC_ID;
+          router.navigate("#mywork/mywork1/edit/resid/"+row.REC_RESID+"/recid/"+row.REC_ID+"?scrolltop="+work.currentPagescrolltop+"&selectedrecid="+ work.selectedRecid);
        }
+ //删除记录 
        work.del=function(row){
-          // dialog.showMessage('del',"新同事");
+          work.currentPagescrolltop=0;
+          work.selectedRecid=0
           var self=this;
           var selfwork=work;
           var myeditbase=new editbase(row.REC_RESID,row.REC_ID);
@@ -181,19 +240,20 @@ define(['durandal/app','knockout','plugins/router','plugins/dialog','jquery','ed
             });
          
         
-          
+        
        }
+ //查阅记录 
        work.browse=function(row){
-         //  dialog.showMessage('browse',"新同事");
-          router.navigate("#mywork/mywork1/browse/resid/"+row.REC_RESID+"/recid/"+row.REC_ID);
-        // router.navigate("#editform/"+row.REC_RESID+"/record/"+row.REC_ID+"/data/"+JSON.stringify(row)+"/action/browse");
+          work.currentPagescrolltop=work.getcurrentPagescrolltop();
+          work.selectedRecid=row.REC_ID;
+          router.navigate("#mywork/mywork1/browse/resid/"+row.REC_RESID+"/recid/"+row.REC_ID+"?scrolltop="+work.currentPagescrolltop+"&selectedrecid="+ work.selectedRecid);
        }
+ //添加记录 
        work.add=function(){
-           router.navigate("#mywork/mywork1/add/resid/"+this.getViewresid()+"/recid/0");
-          // dialog.showMessage('add',"新同事");
-           // appConfig.app.showaddbutton(false);
-         
-          // router.navigate("#editform/"+row.REC_RESID+"/record/0/data/"+JSON.stringify({})+"/action/add");
+          work.currentPagescrolltop=0;
+           work.selectedRecid=0
+          router.navigate("#mywork/mywork1/add/resid/"+this.getViewresid()+"/recid/0"+"?scrolltop="+work.currentPagescrolltop+"&selectedrecid="+ work.selectedRecid);
+       
      }
 return work;
 }); 

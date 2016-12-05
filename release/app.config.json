@@ -50,7 +50,7 @@
                
                 
             ,
-        "myworkRouter": [{ "route": ["","mywork1/:action/resid/:resid/recid/:recid"],"title":"请假申请","resid":"533143158334","hash":"#mywork/mywork1/list/resid/0/recid/0", "moduleId":"viewmodels/mywork1", "nav": true ,"iconCls":"icon icon-settings","pagemode":"lazyrepeat","pagesize":8,"type":"myworkpage"},
+        "myworkRouter": [{ "route": ["","mywork1/:action/resid/:resid/recid/:recid"],"title":"请假申请","resid":"533143158334","hash":"#mywork/mywork1/list/resid/0/recid/0", "moduleId":"viewmodels/mywork1", "nav": true ,"iconCls":"icon icon-settings","pagemode":"lazyrepeat","pagesize":8,"type":"myworkpage","filterresids":[{"text":"全部","resid":"533143158334"},{"text":"未审批","resid":"534275691867"},{"text":"已审批","resid":"534282675701"}]},
          { "route": "mywork2","title":"mywork2","resid":"529072606462", "moduleId": "viewmodels/mywork2", "nav": true ,"iconCls":"icon icon-settings","type":"myworkpage"}]
        
               

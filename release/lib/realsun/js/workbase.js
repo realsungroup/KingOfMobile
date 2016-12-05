@@ -3,12 +3,28 @@
             function workbase()
             {
                 
-                
+               
                 this.rows=appConfig.app.ko.observableArray([]);
                 this.key=appConfig.app.ko.observable("");
                 this.cmswhere=appConfig.app.ko.observable("");
                 this.lastError=appConfig.app.ko.observable("");
                 this.total=appConfig.app.ko.observable(0);
+                this.currentPagescrolltop=0;
+                this.getFilterresids=function(){
+                           return  this.myrouter.filterresids;
+                    };
+                this.currentFilterResid=appConfig.app.ko.observable("");
+
+                this.currentResidChanged=function(resid){
+                    var self=this;
+                    self.currentFilterResid(resid);
+                    fetchPage(self)
+
+                }
+                this.selectedRecid=0;
+                this.getcurrentPagescrolltop=function(){
+                        return $('.page__content').scrollTop();
+                    }
                 this.setPagesize=function(size){
                     this.myrouter.pagesize=size;
                 };
@@ -31,7 +47,13 @@
                 this.myrouter=null;
                 this.getViewresid=function(){
                     var that=this;
-                    return that.myrouter.resid;
+                    if (that.currentFilterResid()==0)
+                    { return that.myrouter.resid;}
+                    else
+                    {
+                        return that.currentFilterResid()
+                    }
+                   
 
                 }
                 this.getTitle=function(){
@@ -45,7 +67,7 @@
                         var row={}
                         for (x in data)
                         {eval('row.'+data[x].id+'=null');}
-                        row.REC_RESID=that.myrouter.resid
+                        row.REC_RESID=that.getViewresid();
                         dfd.resolve(row);
 
                     }
@@ -118,7 +140,40 @@
                   {
                        if (self.rows().length==0){ self.pageIndexChanged(self.pageIndex);}
                    try {
-             
+//-----------------mobiscroll 初始化
+                 $(function() {
+                            var currYear = (new Date()).getFullYear();
+                            var opt = {};
+                           // opt.date = { preset: 'date' };
+                            //opt.datetime = { preset: 'datetime' };
+                            // opt.time = { preset: 'time' };
+                            opt.default = {
+                                theme: 'bootstrap', //皮肤样式
+                                display: 'center', //显示方式
+                                mode: 'scroller', //日期选择模式
+                                dateFormat: 'yy-mm-dd',
+                                timeFormat:'HH:ii',
+                                preset: 'datetime',
+                                lang: 'zh',
+                                showNow: true,
+                                steps: { 
+                                            minute: 15,
+                                            second: 5,
+                                            zeroBased: true
+                                        },
+                                nowText: "今天",
+                                startYear: currYear, //开始年份
+                                endYear: currYear + 2, //结束年份
+                            };
+                            $(".appDate").mobiscroll($.extend(opt['date'], opt['default']));
+                            $('.appSelect').mobiscroll().select({
+                                            theme: 'ios',      // Specify theme like: theme: 'ios' or omit setting to use default
+                                            lang: 'zh',   // Specify language like: lang: 'pl' or omit setting to use default
+                                            display: 'center',  // Specify display mode like: display: 'bottom' or omit setting to use default
+                                            mode: 'scroller',        // More info about mode: https://docs.mobiscroll.com/3-0-0_beta2/select#!opt-mode
+                                            minWidth: 100                  // More info about minWidth: https://docs.mobiscroll.com/3-0-0_beta2/select#!opt-minWidth
+                                        });
+                        });       
                         
 //    -----------下拉刷新
                  
@@ -144,7 +199,8 @@
 
                         pullHook.onAction = function(done) {
                            
-                         
+                            self.currentPagescrolltop=0;
+                            self.selectedRecid=0;
                             fetchPage(self);    
                             setTimeout(done, 100);
                         };

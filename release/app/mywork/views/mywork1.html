@@ -7,11 +7,15 @@
       <ons-toolbar-button>
        
         <ons-icon data-bind='click:$root.add' icon="ion-plus">添加</ons-icon>
-         
+        
       </ons-toolbar-button>
     </div>
      <div class="center"></div>
-          
+          <select name='筛选' id = "selectstates" data-bind="click:selectStates,change:stateChanged" class="appSelect">
+          <!--ko foreach:$root.getFilterresids() -->
+                <option data-bind='text:text,value:resid'></option>  
+          <!-- /ko -->
+           </select>  
           <span data-bind='text:rows().length'/>
           <span>/</span>
           <span data-bind='text:total()'/>
@@ -32,11 +36,8 @@
     
  
   <ons-list   data-bind="foreach:rows"  class="list-subhost" >
-     <!--<ons-lazy-repeat id="infinite-list" >-->
-    
    
-     
-    <ons-list-item  class="list__item"  > 
+    <ons-list-item  class="list__item"  data-bind='attr:{id:REC_ID}' > 
       <div class="left list__item__left" data-bind='click:$root.browse'>
         <div data-bind='attr:{class:C3_533402468773}'>
         <i data-bind='attr:{class:C3_533407368877}'></i></div>
