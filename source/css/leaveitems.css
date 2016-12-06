@@ -33,3 +33,19 @@ color: rgb(255, 255, 255);
 {
      background-color: rgb(13, 13, 189)
 }
+#selectstates_dummy{
+    width:80px;
+    text-align: center;
+    border: transparent;
+    color: rgba(38,100,171,0.81);
+    font-size: 26px;
+    margin-top: 7px;
+}
+.addi{
+    font-size: 22px;
+}
+.rno{
+    padding-right: 10px;
+    color: rgba(38,100,171,0.81);
+    font-size: 26px;
+}

@@ -6,27 +6,21 @@
     <div class="left">
       <ons-toolbar-button>
        
-        <ons-icon data-bind='click:$root.add' icon="ion-plus">添加</ons-icon>
+        <ons-icon data-bind='click:$root.add' icon="ion-plus" class="col-xl-4 addi">添加</ons-icon>
         
       </ons-toolbar-button>
     </div>
-     <div class="center"></div>
-          <select name='筛选' id = "selectstates" data-bind="click:selectStates,change:stateChanged" class="appSelect">
+     <div class="center col-xl-4">
+          <select name='筛选' id = "selectstates" width="50px" data-bind="click:selectStates,change:stateChanged" class="appSelect">
           <!--ko foreach:$root.getFilterresids() -->
                 <option data-bind='text:text,value:resid'></option>  
           <!-- /ko -->
            </select>  
+    </div>
+    <div class="right col-xl-4 rno">
           <span data-bind='text:rows().length'/>
           <span>/</span>
           <span data-bind='text:total()'/>
-          <!--<ul class="pagination">-->
-         <!--ko foreach: ko.utils.range(0, maxPageIndex()) -->
-        <!--<li>-->
-            <!--<a href="#" data-bind="text: $data+1, click: function () { $root.pageIndexChanged($data); }" ></a>-->
-             <!--<ons-icon data-bind="text: $data+1, click: function () { $root.pageIndexChanged($data);mini.parse(); }" icon="ion-plus"></ons-icon>-->
-        <!--</li>-->
-        <!-- /ko -->
-      <!--</ul>-->
     </div>
   </ons-toolbar>
   <ons-pull-hook id="pull-hook">

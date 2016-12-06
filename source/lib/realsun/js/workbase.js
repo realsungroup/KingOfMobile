@@ -21,6 +21,15 @@
                     fetchPage(self)
 
                 }
+                this.getCurrentFilterResid=function(){
+                    if (this.currentFilterResid()==""){
+                       return this.myrouter.resid;
+                    }
+                    else
+                    { return this.currentFilterResid()}
+
+                   
+                }
                 this.selectedRecid=0;
                 this.getcurrentPagescrolltop=function(){
                         return $('.page__content').scrollTop();

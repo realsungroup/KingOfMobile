@@ -153,7 +153,7 @@ define(['durandal/app','knockout','plugins/router','plugins/dialog','jquery','ed
               else{
                 
                   mobiscroll.$('#selectstates').change(function(){self.stateChanged()});
-                  mobiscroll.$('#selectstates').val('534275691867').trigger('change'); 
+                  mobiscroll.$('#selectstates').val(work.getCurrentFilterResid()).trigger('change'); 
               }
              
 
