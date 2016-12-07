@@ -29,17 +29,18 @@ color: rgb(255, 255, 255);
    font-size: 14px; 
    background-color: rgb(13, 13, 189)
 }
-.activerow
+ons-list-item:hover
 {
-     background-color: rgb(13, 13, 189)
+     background-color: lightgreen
+
 }
 #selectstates_dummy{
-    width:120px;
+    width:80px;
     text-align: center;
     border: transparent;
     color: rgba(38,100,171,0.81);
-    font-size: 24px;
-    margin-top: 2px;
+    font-size: 26px;
+    margin-top: 7px;
 }
 .addi{
     font-size: 22px;

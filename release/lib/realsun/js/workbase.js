@@ -2,8 +2,47 @@
   workbase=(function(){
             function workbase()
             {
-                
-               
+                this.emptyrow={};
+                this.mobiselectControlid="";
+
+// mobiscroll 状态选择
+                this.stateChanged=function(){
+                                this.currentResidChanged(mobiscroll.$(this.mobiselectControlid).val());
+                            }
+                 //在列表窗口弹出申请状态选择窗口 
+                this.selectStates=function(){
+                    
+                        $(this.mobiselectControlid).mobiscroll('show');
+                        return false;
+                }
+
+                this.Basepath="";
+//注册自己的路由
+                this.registerStateSelectControl=function(id){
+                   this.mobiselectControlid=id;
+                }
+                 this.registerBasepath=function(path){
+                    this.Basepath=path;
+                }
+//向下滚动逐行取记录
+                this.registerInfinitefunction=function(that,callback){
+                    
+                    if (that.total()>that.rows().length)
+                    {  
+                                    that.fetchnextrow(that,function(){
+                                        that.nextrowindex++;
+                                        callback();
+                                    });
+                                
+                        
+                    }
+                    else
+                    {  
+                        callback();
+                        }
+                    
+                    }
+//    -----------------------------            
                 this.rows=appConfig.app.ko.observableArray([]);
                 this.key=appConfig.app.ko.observable("");
                 this.cmswhere=appConfig.app.ko.observable("");
@@ -17,8 +56,11 @@
 
                 this.currentResidChanged=function(resid){
                     var self=this;
-                    self.currentFilterResid(resid);
-                    fetchPage(self)
+                   if (resid!=self.getCurrentFilterResid()){ 
+                       self.currentFilterResid(resid);
+                       fetchPage(self)
+                    }
+                   
 
                 }
                 this.getCurrentFilterResid=function(){
@@ -68,7 +110,7 @@
                 this.getTitle=function(){
                     return this.myrouter.title;
                 }
-                this.emptyrow=function(dfd){
+                this.getDbEmptyrow=function(dfd){
                     var that=this;
                     appConfig.app.dbs.dbGetCmsColumns(that.getViewresid(), fnSuccess, fnError, fnSyserror,dfd);
                     function fnSuccess(data,total,dfd)
@@ -91,8 +133,57 @@
                          dfd.reject(errordata);
                     }
                 }
-                this._activate=function () {
-                       
+    //activate
+        /**参数说明
+         * @action "list/add/edit/browse"
+         * @resid showMessage
+         * @recid {string} message The message to display in the dialog.
+         * @e {string} [title] The title message.
+         */
+                this._activate=function (action,resid,recid,editform,e,work) {
+                        if (e!==undefined){
+                            if (e.scrolltop){this.currentPagescrolltop=e.scrolltop;}
+                            if (e.selectedrecid){this.selectedRecid=e.selectedrecid}
+                         }
+                          if (action==undefined){
+                                this.action='list';
+                               
+                                
+                            }
+                            else{
+                                this.action=action;
+                             
+                                
+                            }
+                        
+                        if (this.action=='list'){
+                            
+                           
+                        }
+                        else{
+                            this.editform=editform;
+                            var that=this;
+                            var rows=that.rows();
+                            
+                            if (that.action=='add')
+                            {
+                               
+                                
+                             
+                                that.editform.activate(resid,recid,JSON.stringify(that.emptyrow),that.action);
+                                
+                            }
+                            else
+                            {
+                                var o=$.grep(rows,function(row,i){return row["REC_ID"]==recid})[0];
+                                var json=JSON.stringify(o);
+                                that.editform.activate(resid,recid,json,that.action,o);
+                            }
+                            
+                            
+                        }
+                         
+    //    --------------------------------                  
                          var self=this;
                          var openid="";
                          var self=this;
@@ -132,18 +223,39 @@
                             //跳转首页登入
                           window.location='/#'}
                         
-                      
+                      appConfig.app.subtitle(work.getTitle());
+                      appConfig.app.infinitefunction=work.infinitefunction;
 
                 };
            this._attached=function () {  
                 
-                 var self=this;
+              var self=this;
                   
+              if (self.action=='list'){
+               
+                  mobiscroll.$(self.mobiselectControlid).change(function(){self.stateChanged()});
+                  mobiscroll.$(self.mobiselectControlid).val(self.getCurrentFilterResid()).trigger('change'); 
                 
-          
+              }
+              
                
             };
-           this._compositionComplete=function(){ 
+           this._compositionComplete=function(view,work){
+//  ------------------------
+                if (this.action=='list'){
+               
+                   
+                    // ------------开始定位当前的记录
+                    if  (this.currentPagescrolltop>0)
+                    {
+                       
+                       
+                        $('.page__content').animate({'scrollTop':this.currentPagescrolltop},1000);
+                        
+                    }
+                 
+              }
+              
               var self=this;
                 if ( appConfig.app.dbs!==null)
                   {
@@ -220,7 +332,8 @@
                  
 // --------------------------------------------------------------------
                       
-                  }         
+                  }      
+                    appConfig.app.subtitle(work.getTitle());   
                
               };
               this.setModuleid=function(moduleid)
@@ -250,7 +363,101 @@
              var self=this;
              self.pageIndex=index;
              fetchPage(self);      
-          }  
+          };
+// -----------------------// -----------------------------form section 编辑或查阅窗口模式下的功能
+  this._saveform=function(work,system,router){
+         var that=work;
+         
+         
+         var promise=system.defer(function(dfd){
+                                    try {
+                                      
+                                        that.editform.saveform(dfd);
+                                        
+                                    
+                                    } catch (error) {
+                                        dfd.reject(error);
+                                    
+                                    }
+                                }).promise();
+            promise.then(function(e){
+                if (that.action=='add')
+                {
+                    that.rows.unshift(e.data[0]);
+                    that.selectedRecid=e.data[0].REC_ID;
+                    that.total(that.total()+1);
+                }
+                else
+                {
+                    that.selectedRecid= that.editform.formdata().REC_ID;
+                  // that.rows.sort(function (left, right) { return left.REC_EDTTIME == right.REC_EDTTIME ? 0 : (left.REC_EDTTIME < right.REC_EDTTIME ? 1 : -1) }) 
+                }
+                 
+                router.navigate(that.Basepath+"/list/resid/0/recid/0?scrolltop="+that.currentPagescrolltop+"&selectedrecid="+ that.selectedRecid);
+               
+            });
+       };
+ //返回列表
+       this._back=function(router){
+                    
+                router.navigate(this.Basepath+"/list/resid/0/recid/0?scrolltop="+this.currentPagescrolltop+"&selectedrecid="+ this.selectedRecid);
+           
+       };
+// ------------------------------list section-列表模式下的功能------------------------------------//
+  //编辑记录  
+       this._edit=function(row,work,path,router){
+          work.currentPagescrolltop=work.getcurrentPagescrolltop();
+          work.selectedRecid=row.REC_ID;
+          router.navigate(path+"/edit/resid/"+row.REC_RESID+"/recid/"+row.REC_ID+"?scrolltop="+work.currentPagescrolltop+"&selectedrecid="+ work.selectedRecid);
+       }
+ //删除记录 
+       this._del=function(row,work,path,router,editbase,dialog){
+          work.currentPagescrolltop=0;
+          work.selectedRecid=0
+           
+          var selfwork=work;
+          var myeditbase=new editbase(row.REC_RESID,row.REC_ID);
+            dialog.showMessage('是否确认删除记录','',['确认','取消'],false).then(function(e){
+                if (e=='确认')
+                {
+                    myeditbase.deletebyrecid().then(function(e){
+                
+                        if (e.error==0)
+                        {
+                            dialog.showMessage('删除成功','').then(function(){
+                                 selfwork.rows.remove(function(onerow){return onerow["REC_ID"]==row.REC_ID;});
+                                 selfwork.total(selfwork.total()-1);
+                            });
+                           
+                        }
+                        else
+                        {
+                            dialog.showMessage(e.message,'删除失败');
+                        }
+                    },function(error){
+                        dialog.showMessage(error,'删除失败');
+
+                    });
+                }
+                
+
+            });
+         
+        
+        
+       }
+ //查阅记录 
+       this._browse=function(row,work,path,router){
+          work.currentPagescrolltop=work.getcurrentPagescrolltop();
+          work.selectedRecid=row.REC_ID;
+          router.navigate(path+"/browse/resid/"+row.REC_RESID+"/recid/"+row.REC_ID+"?scrolltop="+work.currentPagescrolltop+"&selectedrecid="+ work.selectedRecid);
+       }
+ //添加记录 
+       this._add=function(work,path,router){
+            work.currentPagescrolltop=0;
+            work.selectedRecid=0
+            router.navigate(path+"/add/resid/"+work.getViewresid()+"/recid/0"+"?scrolltop="+work.currentPagescrolltop+"&selectedrecid="+ work.selectedRecid);
+     }
   
              
             }
