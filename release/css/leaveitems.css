@@ -35,12 +35,12 @@ ons-list-item:hover
 
 }
 #selectstates_dummy{
-    width:80px;
+    width:130px;
     text-align: center;
     border: transparent;
     color: rgba(38,100,171,0.81);
-    font-size: 26px;
-    margin-top: 7px;
+    font-size: 22px;
+    margin-top: 2px;
 }
 .addi{
     font-size: 22px;

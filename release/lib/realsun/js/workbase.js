@@ -140,7 +140,7 @@
          * @recid {string} message The message to display in the dialog.
          * @e {string} [title] The title message.
          */
-                this._activate=function (action,resid,recid,editform,e,work) {
+                this._activate=function (action,resid,recid,editform,work,e) {
                         if (e!==undefined){
                             if (e.scrolltop){this.currentPagescrolltop=e.scrolltop;}
                             if (e.selectedrecid){this.selectedRecid=e.selectedrecid}

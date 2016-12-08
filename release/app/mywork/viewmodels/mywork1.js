@@ -21,7 +21,7 @@ define(['durandal/app','knockout','plugins/router','plugins/dialog','jquery','ed
 //activate
        work.activate=function(action,resid,recid,e){
          
-            work._activate(action,resid,recid,editform,e,this);
+            work._activate(action,resid,recid,editform,this,e);
            
        };
 //get view
@@ -68,7 +68,7 @@ define(['durandal/app','knockout','plugins/router','plugins/dialog','jquery','ed
          this._saveform(work,system,router)
         
        };
-     work.back=function(){
+       work.back=function(){
                     
                 work._back(router);
            
