@@ -17,7 +17,6 @@ define(['durandal/app','knockout','plugins/router','plugins/dialog','jquery','ed
             $('#selectitems').mobiscroll('show');
             return false;
        }
-   
 //activate
        work.activate=function(action,resid,recid,e){
          
@@ -37,7 +36,13 @@ define(['durandal/app','knockout','plugins/router','plugins/dialog','jquery','ed
 //compositionComplete
        work.compositionComplete=function(view){
            work._compositionComplete(view,work);
-         
+        //    $("ons-list-item").on('mouseenter',function(e){
+        //        $(this).addClass("item-active");
+        //    })
+        //    $("ons-list-item").on('mouseleave',function(e){
+        //        $(this).removeClass("item-active");
+        //    })
+        //    $('#'+work.selectedRecid).trigger('mouseenter');
 
        };
 //binding
@@ -46,7 +51,7 @@ define(['durandal/app','knockout','plugins/router','plugins/dialog','jquery','ed
         };
 //bindingComplete
         work.bindingComplete= function (view) {
-          
+         
         };
 //attached
         work.attached=function(){
@@ -57,6 +62,10 @@ define(['durandal/app','knockout','plugins/router','plugins/dialog','jquery','ed
                 
                  mobiscroll.$('#selectitems').val(this.editform.formdata().C3_533398158705).trigger('change');
                  this.editform.attached();
+              }
+              else
+              {
+                   // 
               }
               
         }
@@ -91,5 +100,6 @@ define(['durandal/app','knockout','plugins/router','plugins/dialog','jquery','ed
            
             work._add(work,work.Basepath,router)
      }
+ 
 return work;
 }); 

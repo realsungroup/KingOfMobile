@@ -2,39 +2,40 @@
   workbase=(function(){
             function workbase()
             {
+                this.itemActiveClass='item-active';
+                this.itemClass='list__item itemfocus';
+                this.nextrowindex=0;
                 this.emptyrow={};
+                this.selectedRecid=appConfig.app.ko.observable("");
                 this.mobiselectControlid="";
-
 // mobiscroll 状态选择
                 this.stateChanged=function(){
                                 this.currentResidChanged(mobiscroll.$(this.mobiselectControlid).val());
                             }
-                 //在列表窗口弹出申请状态选择窗口 
+//在列表窗口弹出申请状态选择窗口 
                 this.selectStates=function(){
                     
                         $(this.mobiselectControlid).mobiscroll('show');
                         return false;
                 }
 
-                this.Basepath="";
-//注册自己的路由
+               
+//注册资源筛选的mobi控件ID
                 this.registerStateSelectControl=function(id){
                    this.mobiselectControlid=id;
                 }
+//注册自己的路由地址
+                 this.Basepath="";
                  this.registerBasepath=function(path){
                     this.Basepath=path;
                 }
-//向下滚动逐行取记录
+//注册向下滚动逐行取记录
                 this.registerInfinitefunction=function(that,callback){
-                    
-                    if (that.total()>that.rows().length)
-                    {  
+                    if (that.total()>that.rows().length){  
                                     that.fetchnextrow(that,function(){
                                         that.nextrowindex++;
                                         callback();
-                                    });
-                                
-                        
+                                    });    
                     }
                     else
                     {  
@@ -42,26 +43,25 @@
                         }
                     
                     }
-//    -----------------------------            
+//-----------------------------rows,key,cmswhere,lasterror,total,currentPagescrolltop       
                 this.rows=appConfig.app.ko.observableArray([]);
                 this.key=appConfig.app.ko.observable("");
                 this.cmswhere=appConfig.app.ko.observable("");
                 this.lastError=appConfig.app.ko.observable("");
                 this.total=appConfig.app.ko.observable(0);
                 this.currentPagescrolltop=0;
+//-----------------------------获取当前页面资源ID
                 this.getFilterresids=function(){
                            return  this.myrouter.filterresids;
                     };
+//-----------------------------修改当前筛选的页面资源ID
                 this.currentFilterResid=appConfig.app.ko.observable("");
-
                 this.currentResidChanged=function(resid){
-                    var self=this;
+                   var self=this;
                    if (resid!=self.getCurrentFilterResid()){ 
                        self.currentFilterResid(resid);
                        fetchPage(self)
                     }
-                   
-
                 }
                 this.getCurrentFilterResid=function(){
                     if (this.currentFilterResid()==""){
@@ -72,7 +72,8 @@
 
                    
                 }
-                this.selectedRecid=0;
+//-------------------------------------------------------------------------------------- 
+             
                 this.getcurrentPagescrolltop=function(){
                         return $('.page__content').scrollTop();
                     }
@@ -133,7 +134,7 @@
                          dfd.reject(errordata);
                     }
                 }
-    //activate
+//activate
         /**参数说明
          * @action "list/add/edit/browse"
          * @resid showMessage
@@ -143,7 +144,7 @@
                 this._activate=function (action,resid,recid,editform,work,e) {
                         if (e!==undefined){
                             if (e.scrolltop){this.currentPagescrolltop=e.scrolltop;}
-                            if (e.selectedrecid){this.selectedRecid=e.selectedrecid}
+                            if (e.selectedrecid){this.selectedRecid(e.selectedrecid)}
                          }
                           if (action==undefined){
                                 this.action='list';
@@ -195,8 +196,7 @@
                          {
                               self.myrouter.pagesize=Math.floor(document.body.clientHeight*0.015)
                          }
-                        
-                         this.nextrowindex=this.getPagesize();
+                         
                          if (appConfig.app.runmode=="weixin"){
                             openid=appConfig.appfunction.system.getWeixinOpenid();
                             //weixin 登入  
@@ -227,6 +227,7 @@
                       appConfig.app.infinitefunction=work.infinitefunction;
 
                 };
+// -------_activate
            this._attached=function () {  
                 
               var self=this;
@@ -235,22 +236,25 @@
                
                   mobiscroll.$(self.mobiselectControlid).change(function(){self.stateChanged()});
                   mobiscroll.$(self.mobiselectControlid).val(self.getCurrentFilterResid()).trigger('change'); 
-                
+                 
               }
               
                
             };
+//  ---------_compositionComplete
            this._compositionComplete=function(view,work){
-//  ------------------------
+
                 if (this.action=='list'){
                
                    
                     // ------------开始定位当前的记录
                     if  (this.currentPagescrolltop>0)
                     {
+                        var that=this;
                        
-                       
-                        $('.page__content').animate({'scrollTop':this.currentPagescrolltop},1000);
+                        $('.page__content').animate({'scrollTop':this.currentPagescrolltop},1000,null,function(){
+                           
+                        });
                         
                     }
                  
@@ -296,14 +300,10 @@
                                         });
                         });       
                         
-//    -----------下拉刷新
-                 
-                   
+//-------------------------------下拉刷新
                            var pullHook = document.getElementById('pull-hook');
-                      
                             pullHook.addEventListener('changestate', function(event) {
                             var message = '';
-
                             switch (event.state) {
                             case 'initial':
                                // message = '下拉刷新';
@@ -317,11 +317,9 @@
                             }
                         //pullHook.innerHTML = message;
                     });
-
-                        pullHook.onAction = function(done) {
-                           
+                            pullHook.onAction = function(done) {
                             self.currentPagescrolltop=0;
-                            self.selectedRecid=0;
+                            self.selectedRecid(0);
                             fetchPage(self);    
                             setTimeout(done, 100);
                         };
@@ -356,16 +354,17 @@
                }
              );
          }
-          this.pageSize=appConfig.app.defaultpagesize;
-          this.pageIndex=0;
-          this.nextrowindex=this.pageSize*(this.pageIndex+1);
-          this.pageIndexChanged=function(index){   
-             var self=this;
-             self.pageIndex=index;
-             fetchPage(self);      
+            this.pageSize=appConfig.app.defaultpagesize;
+            this.pageIndex=0;
+          
+            this.pageIndexChanged=function(index){   
+            var self=this;
+            self.pageIndex=index;
+            fetchPage(self);      
           };
 // -----------------------// -----------------------------form section 编辑或查阅窗口模式下的功能
-  this._saveform=function(work,system,router){
+ // _saveform
+     this._saveform=function(work,system,router){
          var that=work;
          
          
@@ -384,36 +383,42 @@
                 if (that.action=='add')
                 {
                     that.rows.unshift(e.data[0]);
-                    that.selectedRecid=e.data[0].REC_ID;
+                    that.selectedRecid(e.data[0].REC_ID);
                     that.total(that.total()+1);
                 }
                 else
                 {
-                    that.selectedRecid= that.editform.formdata().REC_ID;
+                    that.selectedRecid(that.editform.formdata().REC_ID);
                   // that.rows.sort(function (left, right) { return left.REC_EDTTIME == right.REC_EDTTIME ? 0 : (left.REC_EDTTIME < right.REC_EDTTIME ? 1 : -1) }) 
                 }
                  
-                router.navigate(that.Basepath+"/list/resid/0/recid/0?scrolltop="+that.currentPagescrolltop+"&selectedrecid="+ that.selectedRecid);
+                router.navigate(that.Basepath+"/list/resid/0/recid/0?scrolltop="+that.currentPagescrolltop+"&selectedrecid="+ that.selectedRecid());
                
             });
        };
  //返回列表
        this._back=function(router){
                     
-                router.navigate(this.Basepath+"/list/resid/0/recid/0?scrolltop="+this.currentPagescrolltop+"&selectedrecid="+ this.selectedRecid);
+                router.navigate(this.Basepath+"/list/resid/0/recid/0?scrolltop="+this.currentPagescrolltop+"&selectedrecid="+ this.selectedRecid());
            
        };
 // ------------------------------list section-列表模式下的功能------------------------------------//
+  //click focus
+   this._focus=function(row,work,path,router){
+          work.currentPagescrolltop=work.getcurrentPagescrolltop();
+          work.selectedRecid(row.REC_ID);
+          
+       }
   //编辑记录  
        this._edit=function(row,work,path,router){
           work.currentPagescrolltop=work.getcurrentPagescrolltop();
-          work.selectedRecid=row.REC_ID;
-          router.navigate(path+"/edit/resid/"+row.REC_RESID+"/recid/"+row.REC_ID+"?scrolltop="+work.currentPagescrolltop+"&selectedrecid="+ work.selectedRecid);
+          work.selectedRecid(row.REC_ID);
+          router.navigate(path+"/edit/resid/"+row.REC_RESID+"/recid/"+row.REC_ID+"?scrolltop="+work.currentPagescrolltop+"&selectedrecid="+ row.REC_ID);
        }
  //删除记录 
        this._del=function(row,work,path,router,editbase,dialog){
           work.currentPagescrolltop=0;
-          work.selectedRecid=0
+          work.selectedRecid(0)
            
           var selfwork=work;
           var myeditbase=new editbase(row.REC_RESID,row.REC_ID);
@@ -449,21 +454,21 @@
  //查阅记录 
        this._browse=function(row,work,path,router){
           work.currentPagescrolltop=work.getcurrentPagescrolltop();
-          work.selectedRecid=row.REC_ID;
-          router.navigate(path+"/browse/resid/"+row.REC_RESID+"/recid/"+row.REC_ID+"?scrolltop="+work.currentPagescrolltop+"&selectedrecid="+ work.selectedRecid);
+          work.selectedRecid(row.REC_ID);
+          router.navigate(path+"/browse/resid/"+row.REC_RESID+"/recid/"+row.REC_ID+"?scrolltop="+work.currentPagescrolltop+"&selectedrecid="+ row.REC_ID);
        }
  //添加记录 
        this._add=function(work,path,router){
             work.currentPagescrolltop=0;
-            work.selectedRecid=0
-            router.navigate(path+"/add/resid/"+work.getViewresid()+"/recid/0"+"?scrolltop="+work.currentPagescrolltop+"&selectedrecid="+ work.selectedRecid);
+            work.selectedRecid(0)
+            router.navigate(path+"/add/resid/"+work.getViewresid()+"/recid/0"+"?scrolltop="+work.currentPagescrolltop+"&selectedrecid="+ row.REC_ID);
      }
   
              
             }
             return   workbase;
         }());
-         
+// --------------------fetchPage
   fetchPage=function(self){
 
                 self.nextrowindex=self.getPagesize();
@@ -521,6 +526,7 @@
                 }
         
         };
+// -----------myworkbase
  var myworkbase=(function (_super) {
             __extends(myworkbase, _super);
             function myworkbase() {
