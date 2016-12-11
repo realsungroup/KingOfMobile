@@ -45,8 +45,7 @@
         "mainRouter":[
                 { "route": "", "title":"首页", "moduleId": "main/viewmodels/welcome", "nav": true,"iconCls":"icon icon-home" ,"type":"root"},
                 { "route": "mywork*detail","title":"我的工作", "moduleId": "mywork/myworkshell", "nav": true ,"iconCls":"icon icon-me","type":"root"},
-                { "route": "setting","title":"设置", "moduleId": "main/viewmodels/setting", "nav": true ,"iconCls":"icon icon-settings","type":"root"},
-          { "route": "editform/:resid/record/:recid/data/:json/action/:name","title":"请假申请-编辑", "moduleId": "mywork/editforms/viewmodels/editform", "nav": false,"navvisible":false ,"iconCls":"icon icon-settings","type":"root"}]
+                { "route": "setting","title":"设置", "moduleId": "main/viewmodels/setting", "nav": true ,"iconCls":"icon icon-settings","type":"root"}]
                
                 
             ,

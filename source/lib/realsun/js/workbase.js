@@ -5,6 +5,7 @@
                 this.itemActiveClass='item-active';
                 this.itemClass='list__item itemfocus';
                 this.nextrowindex=0;
+                this.pagestep=1;
                 this.emptyrow={};
                 this.selectedRecid=appConfig.app.ko.observable("");
                 this.mobiselectControlid="";
@@ -33,7 +34,7 @@
                 this.registerInfinitefunction=function(that,callback){
                     if (that.total()>that.rows().length){  
                                     that.fetchnextrow(that,function(){
-                                        that.nextrowindex++;
+                                        that.nextrowindex=that.nextrowindex+1;
                                         callback();
                                     });    
                     }
@@ -215,13 +216,13 @@
                          }
                         if ( appConfig.app.dbs!==null)
                         {
-                           if (self.rows().length==0){ self.pageIndexChanged(self.pageIndex);}
+                           
                            
                             
                         }
                         else{
                             //跳转首页登入
-                          window.location='/#'}
+                               window.location='/#'}
                         
                       appConfig.app.subtitle(work.getTitle());
                       appConfig.app.infinitefunction=work.infinitefunction;
@@ -341,11 +342,25 @@
               };
         
          this.fetchnextrow=function(self,callback){
-             fetchrows(self,1,self.nextrowindex,function(result,data,total){
+             fetchrows(self,self.pagestep,self.nextrowindex,function(result,data,total){
                     if (result){ 
                         if (data.length>0)
                         {
-                             self.rows.push(data[0]);
+
+                            data.forEach(function(datarow) {
+                                  var index= self.rows().findIndex(function(row,index){
+                                      return row.REC_ID==datarow.REC_ID;
+                                  });
+                                  if (index==-1)
+                                    {
+                                        self.rows.push(datarow);
+                                    }
+                                
+                            }, this);
+                           
+                             
+
+
 
                         }
                           
@@ -461,7 +476,7 @@
        this._add=function(work,path,router){
             work.currentPagescrolltop=0;
             work.selectedRecid(0)
-            router.navigate(path+"/add/resid/"+work.getViewresid()+"/recid/0"+"?scrolltop="+work.currentPagescrolltop+"&selectedrecid="+ row.REC_ID);
+            router.navigate(path+"/add/resid/"+work.getViewresid()+"/recid/0"+"?scrolltop="+work.currentPagescrolltop+"&selectedrecid=0");
      }
   
              
@@ -471,7 +486,7 @@
 // --------------------fetchPage
   fetchPage=function(self){
 
-                self.nextrowindex=self.getPagesize();
+                self.nextrowindex=(self.getPagesize()/self.pagestep) -1;
                 fetchrows(self,self.getPagesize(),self.pageIndex,function(result,data,total){
                     if (result)
                     { 

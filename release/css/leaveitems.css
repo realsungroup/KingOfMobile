@@ -18,10 +18,7 @@ color: rgb(255, 255, 255);
    font-size: 14px; 
    background-color: rgb(13, 168, 189)
 }
-ons-list-item::hover
-{
-        background-color: lightyellow
-}
+
 .state-denied
 {
 color: rgb(255, 255, 255);

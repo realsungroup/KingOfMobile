@@ -19,8 +19,11 @@ define(['durandal/app','knockout','plugins/router','plugins/dialog','jquery','ed
        }
 //activate
        work.activate=function(action,resid,recid,e){
-         
+          
             work._activate(action,resid,recid,editform,this,e);
+            work.pagestep=work.getPagesize();
+            if ( appConfig.app.dbs!==null){ if (work.rows().length==0){ work.pageIndexChanged(work.pageIndex);}}
+           
            
        };
 //get view
@@ -36,14 +39,7 @@ define(['durandal/app','knockout','plugins/router','plugins/dialog','jquery','ed
 //compositionComplete
        work.compositionComplete=function(view){
            work._compositionComplete(view,work);
-        //    $("ons-list-item").on('mouseenter',function(e){
-        //        $(this).addClass("item-active");
-        //    })
-        //    $("ons-list-item").on('mouseleave',function(e){
-        //        $(this).removeClass("item-active");
-        //    })
-        //    $('#'+work.selectedRecid).trigger('mouseenter');
-
+  
        };
 //binding
        work.binding= function (view) {
@@ -99,6 +95,10 @@ define(['durandal/app','knockout','plugins/router','plugins/dialog','jquery','ed
        work.add=function(){
            
             work._add(work,work.Basepath,router)
+     }
+//当前记录
+     work.selectRow=function(row){
+            work.selectedRecid(row.REC_ID);
      }
  
 return work;
