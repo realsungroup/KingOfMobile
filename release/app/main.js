@@ -7,6 +7,8 @@ requirejs.config({
         'knockout': '../lib/knockout/knockout-3.4.0',
         'bootstrap': '../lib/bootstrap/js/bootstrap',
         'jquery': '../lib/jquery/jquery-1.9.1',
+      
+        'signature':'../lib/signature/js/jq-signature',
         'realsun': '../lib/realsun/js',
         'myworkshell':'mywork/',
         'myworkbase':'mywork/',
